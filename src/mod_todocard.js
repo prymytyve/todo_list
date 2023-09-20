@@ -1,6 +1,6 @@
 // import { format, formatDistance, formatRelative, subDays } from 'date-fns'
 
- class ToDo {
+ class ToDo {    
     constructor(title, priority, dueDate, ...subTasks){
         this.title = title
         this.piority = priority
@@ -9,10 +9,9 @@
         this.subTasksList = []
         createSubList(subTasks, this.subTasksList)
         this.completed = false                
-    }
-
-    //methods
-};
+    };
+    addToList = (v) => v.push(this);
+}
 
 function createSubList (a, b){
     a.forEach(item =>{
@@ -22,14 +21,14 @@ function createSubList (a, b){
             },
             completed:{
                 value: false        
-            }}            
-        );    
-        b.push(taskList)
-    })
-}
+            }}          
+        )  
+        b.push(taskList);
+    });
+};
 
 
-export default ToDo
+export default ToDo;
 
 
 
