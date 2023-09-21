@@ -12,12 +12,11 @@ const submit = document.querySelector('.submit');
 function dom(){
     const defaultList = new Projects('Default List');
     defaultList.pushToArr();
-
+    
     
     submit.addEventListener('click', e => {
         e.preventDefault();
         const toDo = new ToDo(title.value, priority.value, due.value, tasks.value);
-        console.log(toDo)
         toDo.generate()
         toDo.addToList(defaultList.list)
         defaultList.log()
@@ -25,24 +24,33 @@ function dom(){
 };
 
 
-
+//method which generates and appends To dos to dom
 ToDo.prototype.generate = function(){
     const card = document.createElement('div');    
     const list = document.createElement('ul');
+    const list2 = document.createElement('ul')
 
+    //creates title, priority, and due date elements
     const info = [this.title, this.priority, this.dueDate];
     info.forEach(a => {
         const line = document.createElement('li');
         line.textContent = a;
         list.appendChild(line)
-    })     
+    })
 
+
+    //creates the list of subtasks
+    const sub = this.subList;
+    sub.forEach(item => {
+        const line = document.createElement('li');
+        line.textContent = item.task;
+        list2.appendChild(line);
+    })       
+
+    list.appendChild(list2)
     card.appendChild(list)
-    mainBody.append(card)
-    
+    mainBody.append(card)    
 }
-
-
 
 export default dom
 

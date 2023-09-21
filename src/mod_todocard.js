@@ -12,7 +12,12 @@ const mainBody = document.querySelector('#mainBody');
         createSubList(subTasks, this.subTaskList)
         this.completed = false                
     };
+    
     addToList = (v) => v.push(this);
+    
+    get subList() {
+        return this.subTaskList
+    }
 }
 
 function createSubList (a, b){
