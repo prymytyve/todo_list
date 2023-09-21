@@ -1,6 +1,7 @@
-import './style.css'
-import ToDo from './mod_todocard'
-import Projects from './mod_projects'
+import './style.css';
+import ToDo from './mod_todocard';
+import Projects from './mod_projects.js';
+import dom from './mod_dom.js';
 
 // const todo1 = new ToDo('first', 'urgent', 'Tomorrow', 'Long list of stuff', 'no notes', 'some notes', 'all of the notes')
 // console.log(todo1)
@@ -13,3 +14,4 @@ import Projects from './mod_projects'
 
 
 // todo1.addToList(defaultList.list)
+dom()

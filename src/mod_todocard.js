@@ -1,13 +1,15 @@
 // import { format, formatDistance, formatRelative, subDays } from 'date-fns'
+const mainBody = document.querySelector('#mainBody');
+
 
  class ToDo {    
     constructor(title, priority, dueDate, ...subTasks){
         this.title = title
-        this.piority = priority
+        this.priority = priority
         this.dueDate = dueDate
         this.dateCreated = new Date()
-        this.subTasksList = []
-        createSubList(subTasks, this.subTasksList)
+        this.subTaskList = []
+        createSubList(subTasks, this.subTaskList)
         this.completed = false                
     };
     addToList = (v) => v.push(this);
@@ -29,7 +31,3 @@ function createSubList (a, b){
 
 
 export default ToDo;
-
-
-
-
