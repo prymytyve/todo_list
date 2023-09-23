@@ -6,20 +6,21 @@ const title = document.querySelector('#title');
 const priority = document.querySelector('#priority');
 const due = document.querySelector('#due');
 const tasks = document.querySelector('#tasks');
-const move = document.querySelector('#move');
+const project = document.querySelector('#project');
 const submit = document.querySelector('.submit');
 
 function dom(){
-    const defaultList = new Projects('Default List');
-    defaultList.pushToArr();
-    
+
     
     submit.addEventListener('click', e => {
         e.preventDefault();
         const toDo = new ToDo(title.value, priority.value, due.value, tasks.value);
+        // const project = new Projects(project.value)
+        // project.log()
         toDo.generate()
-        toDo.addToList(defaultList.list)
-        defaultList.log()
+        // toDo.project = project.name;
+        toDo.log()
+
     })
 };
 
@@ -40,12 +41,12 @@ ToDo.prototype.generate = function(){
 
 
     //creates the list of subtasks
-    const sub = this.subList;
-    sub.forEach(item => {
-        const line = document.createElement('li');
-        line.textContent = item.task;
-        list2.appendChild(line);
-    })       
+    // const sub = this.subList;
+    // sub.forEach(item => {
+    //     const line = document.createElement('li');
+    //     line.textContent = item.task;
+    //     list2.appendChild(line);
+    // })       
 
     list.appendChild(list2)
     card.appendChild(list)

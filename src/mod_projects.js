@@ -4,21 +4,16 @@ const projectList = [];
 class Projects {
     constructor(projName){
         this.projName = projName
-        this.listOfToDos = []
+        this.add()
     };
 
     get name(){
-        return this.projName
+        return this.projName;
     };
 
-    pushToArr = () => projectList.push(this);
-    log = () => console.log(projectList);
-
-    get list(){
-        return this.listOfToDos
-    };
+    add = () => {projectList.push(this)}
+    log = () => console.log(projectList)
 }
-
 
 
 
