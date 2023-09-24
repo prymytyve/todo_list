@@ -9,7 +9,7 @@ class ToDo {
         this.title = title
         this.priority = priority
         this.dueDate = dueDate
-        this.addSubItem(subTasks)
+        this.addSub(subTasks)
         this.add()               
     };
     
@@ -20,16 +20,13 @@ class ToDo {
     project = ''
 
 
-    
-    addSubItem = (a) => {
-        a.forEach(item =>{
-            const taskList = Object.create({}, {
-                task:{value: item},
-                completed:{value: false}}          
-            )  
-            this.subTaskList.push(taskList)
-        })
+    addSub = (a) => {
+        const task = Object.create({}, {
+            task:{value: a},
+            completed:{value: false}})
+        this.subTaskList.push(task)         
     }
+
     
 
     add = () => toDoArr.push(this)
