@@ -63,7 +63,12 @@ ToDo.prototype.generate = function(){
         const span = document.createElement('span')
         span.textContent = sub.task;
         line.appendChild(span)
-        if(sub.type==='task') taskCheck(line,span);
+        if(sub._type==='task'){
+            const input = document.createElement('input');
+            input.setAttribute('type', 'checkbox')
+            line.insertBefore(input, span)
+            input.addEventListener('change', e => sub._completed = input.checked)        
+        } 
         list2.appendChild(line)
     })
 
@@ -72,20 +77,14 @@ ToDo.prototype.generate = function(){
     mainBody.append(card)    
 }
 
-function taskCheck(i, l){
-    const input = document.createElement('input');
-    input.setAttribute('type', 'checkbox')
-    i.insertBefore(input, l)
-}
+
 
 
 //export function that creates new ToDo based on user's input
 function dom(){
     submit.addEventListener('click', e => {
         e.preventDefault()
-        console.log(tempList)
-        const subs = tempList
-        const toDo = new ToDo(title.value, priority.value, due.value, ...subs);
+        const toDo = new ToDo(title.value, priority.value, due.value, ...tempList);
         toDo.generate()
         // toDo.project = project.name;
         toDo.log()

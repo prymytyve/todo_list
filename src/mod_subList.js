@@ -8,7 +8,8 @@ class Temp {
         this.add()
     }
     _type = 'note'
-    
+    _completed = false
+
     add = () => {tempList.push(this)}
 
     delete = () => {
@@ -28,6 +29,10 @@ class Temp {
 
     get task(){
        return this._task
+    }
+
+    set completed(val){
+        val === true? this._completed = true: this._completed = false;
     }
 }
 
