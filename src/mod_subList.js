@@ -7,7 +7,8 @@ class Temp {
         this._task 
         this.add()
     }
-
+    _type = 'note'
+    
     add = () => {tempList.push(this)}
 
     delete = () => {
@@ -20,21 +21,17 @@ class Temp {
         this._task = value
     }
 
+
+    set type(val){
+        val === true?this._type = 'task':this._type = 'note';
+    }
+
     get task(){
        return this._task
     }
 }
 
 
-//used to store actual sub tasks in an array that is needed to generate sublist
-const tempLister = () => {
-    const tempArray = [];
-    tempList.forEach(i => {
-        tempArray.push(i.task)
-    })
-    return tempArray;
-}
 
 
-
-export {Temp, tempLister};
+export {Temp, tempList};

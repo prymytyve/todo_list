@@ -1,5 +1,4 @@
 // import { format, formatDistance, formatRelative, subDays } from 'date-fns'
-
 const mainBody = document.querySelector('#mainBody');
 const toDoArr = [];
 
@@ -10,7 +9,7 @@ class ToDo {
         this.title = title
         this.priority = priority
         this.dueDate = dueDate
-        subTasks.forEach(sub => this.addSub(sub))
+        subTasks.forEach(sub => this.addSub(sub._task, sub._type))
         this.add()               
     };
     
@@ -21,9 +20,10 @@ class ToDo {
     project = ''
 
 
-    addSub = (a) => {
+    addSub = (a,b) => {
         const task = Object.create({}, {
             task:{value: a},
+            type:{value: b},
             completed:{value: false}})
         this.subTaskList.push(task)         
     }

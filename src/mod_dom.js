@@ -1,6 +1,6 @@
 import ToDo from "./mod_todocard";
 import Projects from "./mod_projects";
-import {Temp, tempLister} from './mod_subList'
+import {Temp, tempList} from './mod_subList'
 
 const mainBody = document.querySelector('#mainBody')
 const title = document.querySelector('#title');
@@ -13,7 +13,7 @@ const addTaskbtn = document.querySelector('.addTask');
 const addSec = document.querySelector('.addSec');
 
 
-//Subtask list buttons
+//add task button generates subtask list buttons
 addTaskbtn.addEventListener('click', e => {
     e.preventDefault()
     const li = document.createElement('li');
@@ -21,24 +21,30 @@ addTaskbtn.addEventListener('click', e => {
     const tempItem = new Temp(input.value)
     input.addEventListener('keyup', e =>{
         tempItem.newName = input.value
-})
+    })
     
     
-const deleteSub = document.createElement('button');
+    const deleteSub = document.createElement('button');
     deleteSub.textContent = 'X';       
     deleteSub.addEventListener('click', e => {
         e.preventDefault()
         subList.removeChild(li)
         tempItem.delete()
-    })
+    })  
     li.appendChild(input)
     li.appendChild(deleteSub)
     subList.insertBefore(li, addSec)
+
+    
+    const togSub = document.createElement('input');
+    togSub.setAttribute('type', 'checkbox')
+    togSub.addEventListener('change', e => tempItem.type = togSub.checked)
+    li.insertBefore(togSub,deleteSub)
 })
 
 
-//method which creates and appends Todos to dom
 
+//method which creates and appends Todos to dom
 ToDo.prototype.generate = function(){
     const card = document.createElement('div');    
     const list = document.createElement('ul');
@@ -54,7 +60,10 @@ ToDo.prototype.generate = function(){
 
     this.subTaskList.forEach(sub => {
         const line = document.createElement('li')
-        line.textContent = sub.task;
+        const span = document.createElement('span')
+        span.textContent = sub.task;
+        line.appendChild(span)
+        if(sub.type==='task') taskCheck(line,span);
         list2.appendChild(line)
     })
 
@@ -63,12 +72,19 @@ ToDo.prototype.generate = function(){
     mainBody.append(card)    
 }
 
+function taskCheck(i, l){
+    const input = document.createElement('input');
+    input.setAttribute('type', 'checkbox')
+    i.insertBefore(input, l)
+}
+
 
 //export function that creates new ToDo based on user's input
 function dom(){
     submit.addEventListener('click', e => {
         e.preventDefault()
-        const subs = tempLister()
+        console.log(tempList)
+        const subs = tempList
         const toDo = new ToDo(title.value, priority.value, due.value, ...subs);
         toDo.generate()
         // toDo.project = project.name;
