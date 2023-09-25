@@ -6,10 +6,11 @@ const toDoArr = [];
 
 class ToDo {    
     constructor(title, priority, dueDate, ...subTasks){
+    // constructor(title, priority, dueDate){    
         this.title = title
         this.priority = priority
         this.dueDate = dueDate
-        this.addSub(subTasks)
+        subTasks.forEach(sub => this.addSub(sub))
         this.add()               
     };
     
@@ -37,6 +38,7 @@ class ToDo {
     get subList() {
         return this.subTaskList
     }
+    
         
     set changeProj(value){
         this.project = value
