@@ -20,12 +20,13 @@ class ToDo {
     project = ''
 
 
+    //method take reuse objects created from subList
     addSub = (a) => {
         this.subTaskList.push(a)         
     }
 
     
-
+    
     add = () => toDoArr.push(this)
     log = () => console.log(toDoArr)
     

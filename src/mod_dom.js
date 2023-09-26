@@ -1,6 +1,7 @@
 import ToDo from "./mod_todocard";
 import Projects from "./mod_projects";
 import {Temp, tempList} from './mod_subList'
+import {subInput, resetSubs} from "./mod_form.js";
 
 const mainBody = document.querySelector('#mainBody')
 const title = document.querySelector('#title');
@@ -16,30 +17,7 @@ const addSec = document.querySelector('.addSec');
 //add task button generates subtask list buttons
 addTaskbtn.addEventListener('click', e => {
     e.preventDefault()
-    const li = document.createElement('li');
-    const input = document.createElement('input');
-    const tempItem = new Temp(input.value)
-    input.addEventListener('keyup', e =>{
-        tempItem.newName = input.value
-    })
-    
-    
-    const deleteSub = document.createElement('button');
-    deleteSub.textContent = 'X';       
-    deleteSub.addEventListener('click', e => {
-        e.preventDefault()
-        subList.removeChild(li)
-        tempItem.delete()
-    })  
-    li.appendChild(input)
-    li.appendChild(deleteSub)
-    subList.insertBefore(li, addSec)
-
-    
-    const togSub = document.createElement('input');
-    togSub.setAttribute('type', 'checkbox')
-    togSub.addEventListener('change', e => tempItem.type = togSub.checked)
-    li.insertBefore(togSub,deleteSub)
+    subInput()
 })
 
 
@@ -88,6 +66,7 @@ function dom(){
         toDo.generate()
         // toDo.project = project.name;
         toDo.log()
+        resetSubs()
 
     })
 }
