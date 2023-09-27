@@ -1,0 +1,26 @@
+const mainBody = document.querySelector('#mainBody');
+
+class Todo {
+    constructor(title, priority, dueDate, ...subTodos){
+        this.title = title
+        this.priority = priority
+        this.dueDate = dueDate
+        subTodos.forEach(sub => this.createSubObj(sub))    
+    }
+
+    dateCreated = new Date()
+    completed = false
+    subList = []
+
+
+
+    createSubObj = (i) => {
+        const task = Object.create({}, {
+            task:{value: i},
+            completed:{value: false}
+        })
+        this.subList.push(task)
+    }   
+}
+
+export default Todo;
