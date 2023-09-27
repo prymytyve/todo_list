@@ -3,8 +3,8 @@
 const tempList = [];
 
 class Temp {
-    constructor(){
-        this._task 
+    constructor(i){
+        this._task = i
         this.add()
     }
     _type = 'note'
@@ -18,10 +18,9 @@ class Temp {
     }   
     
     
-    set newName(value){
+    set task(value){
         this._task = value
     }
-
 
     set type(val){
         val === true?this._type = 'task':this._type = 'note';
@@ -35,8 +34,5 @@ class Temp {
         val === true? this._completed = true: this._completed = false;
     }
 }
-
-
-
 
 export {Temp, tempList};

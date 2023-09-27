@@ -5,7 +5,6 @@ const toDoArr = [];
 
 class ToDo {    
     constructor(title, priority, dueDate, ...subTasks){
-    // constructor(title, priority, dueDate){    
         this.title = title
         this.priority = priority
         this.dueDate = dueDate
@@ -42,6 +41,8 @@ class ToDo {
     }
 
 }
+
+
 
 
 export default ToDo;

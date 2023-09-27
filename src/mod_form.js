@@ -10,7 +10,7 @@ export function subInput(){
     const input = document.createElement('input');
     const tempItem = new Temp(input.value)
     input.addEventListener('keyup', e =>{
-        tempItem.newName = input.value
+        tempItem.task = input.value
     })   
     
     const deleteSub = document.createElement('button');

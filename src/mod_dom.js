@@ -56,20 +56,15 @@ ToDo.prototype.generate = function(){
 }
 
 
-
-
 //export function that creates new ToDo based on user's input
 function dom(){
     submit.addEventListener('click', e => {
         e.preventDefault()
         const toDo = new ToDo(title.value, priority.value, due.value, ...tempList);
         toDo.generate()
-        // toDo.project = project.name;
-        toDo.log()
         resetSubs()
-
+        tempList.length = 0;
     })
 }
 
 export default dom
-
