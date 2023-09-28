@@ -1,8 +1,8 @@
 const mainBody = document.querySelector('#mainBody');
 
 class Todo {
-    constructor(title, priority, dueDate, ...subTodos){
-        this._title = title
+    constructor(task, priority, dueDate, ...subTodos){
+        this._task = task
         this._priority = priority
         this._dueDate = dueDate
         subTodos.forEach(sub => new Sub(sub, this._subList))
