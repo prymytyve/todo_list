@@ -16,7 +16,7 @@ class Todo {
 
 class Sub{
     constructor(i, v){
-        this._task = i
+        this._subTask = i
         this.add(v)
     }
     _type = 'note'
