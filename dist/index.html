@@ -6,23 +6,9 @@
     <title>To-Do</title>
 </head>
 <body>
-    <dialog open>
-        <form action="" >
-            <ul>
-                <li><label for="title">Title: </label><input type="text" id="title"></li>
-                <li><label for="priority">Priority: </label><input type="text" id="priority"></li>
-                <li><label for="due">Due date: </label><input type="text" id="due"></li>
-                <ul class="subList">
-                    <li class="addSec">
-                        <button class="addTask">+</button>
-                    </li>
-                </ul>
-                <li><label for="projects">Project: </label><input type="text" id="projects"></li>
-                <li><button class="submit">Submit</button></li>
-            </ul>
-        </form>
-    </dialog>
-    <div id="mainBody"></div>  
+    <ul id='mainBody'>
+        <li><button class="addTodo">+</button></li>
+    </div>  
     <script src="main.js"></script>  
 </body>
 </html>
