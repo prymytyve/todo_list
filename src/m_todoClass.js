@@ -32,6 +32,18 @@ class Todo {
         this._dueDate = val
     }
 
+
+    get task(){
+        return this._task 
+    }
+
+    get priority(){
+        return this._priority
+    }
+   
+    get dueDate(){
+        return this._dueDate
+    }
     // set completed(val){
     //     val === true? this._completed = true: this._completed = false;
     // }

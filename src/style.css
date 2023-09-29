@@ -1,0 +1,54 @@
+body,
+div,
+ul,
+li{
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+
+
+body{
+    display:grid;
+    grid-template-columns: 1fr 4fr;
+}
+
+
+nav{
+    background-color: red;
+    height:100vh;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+
+.todo{
+    display:grid;
+    grid-template-columns: 3fr 1fr;
+    width: 500px;
+    margin:5px;
+    border: 1px solid black;
+    padding: 5px 3px;
+}
+
+.task{
+    grid-column: 1/3;
+}
+
+.main{
+    grid-column: 1/3;
+    display: flex;
+    justify-content: space-evenly;
+    margin: 5px 0px;
+}
+
+.editBox{
+    grid-column: 3/4;
+    display: grid;
+}
+
+.sub{
+    grid-column: 1/-1;
+    /* display: grid;
+    justify-items: self-end; */
+}
