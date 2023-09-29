@@ -35,6 +35,10 @@ class Todo {
     // set completed(val){
     //     val === true? this._completed = true: this._completed = false;
     // }
+    delete = (v) => {
+        const i = todoArr.indexOf(this);
+        todoArr.splice(i,1)
+    }
 }
 
 

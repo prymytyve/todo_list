@@ -6,6 +6,7 @@ const addTodo = document.querySelector('.addTodo')
 
 function todoCreator(){
     
+    //creates 
     addTodo.addEventListener('click', () =>{
         const todo = new Todo();
         todo.generate()
@@ -23,7 +24,7 @@ Todo.prototype.generate = function(){
     const main = document.createElement('ul');
     const sub = document.createElement('ul');
 
-    
+    //task name
     const taskDiv = document.createElement('div');
     taskDiv.classList.add('taskDiv')
     const task = document.createElement('input');
@@ -32,7 +33,7 @@ Todo.prototype.generate = function(){
     taskDiv.appendChild(task)
     todo.appendChild(taskDiv)
 
-
+    //priority selection 
     const priorityDiv = document.createElement('div');
     priorityDiv.classList.add('priorityDiv')
     const pLabel= document.createElement('label');
@@ -46,6 +47,7 @@ Todo.prototype.generate = function(){
     priorityDiv.appendChild(pLabel)
     priorityDiv.appendChild(pSelect)
     
+    //priority options
     todo.appendChild(priorityDiv)
     const pOptions = ['', 'Low','Medium','High', 'Urgent']
     for (let i = 0; i <= pOptions.length - 1; i++){
@@ -55,7 +57,7 @@ Todo.prototype.generate = function(){
         pSelect.appendChild(option)
     }
     
-
+    //due date
     const dateDiv= document.createElement('div');
     dateDiv.classList.add('dateDiv')    
     const dateInput= document.createElement('input');
@@ -65,7 +67,7 @@ Todo.prototype.generate = function(){
     dateDiv.appendChild(dateInput)
     main.appendChild(dateDiv)
 
-
+    //creates subtasks and subtask seciton
     const addSub = document.createElement('button');
     addSub.textContent = 'Add task'
     addSub.addEventListener('click', () => {
@@ -77,6 +79,17 @@ Todo.prototype.generate = function(){
     todo.appendChild(main)
     todo.appendChild(sub)
     mainBody.appendChild(todo)
+
+
+    //delete button
+    const delBtn = document.createElement('button');
+    delBtn.classList.add('delBtn')
+    delBtn.textContent = 'Delete';
+    delBtn.addEventListener('click', () => {
+        this.delete()
+        mainBody.removeChild(todo)
+    })
+    todo.appendChild(delBtn)
 }
 
 export default todoCreator
