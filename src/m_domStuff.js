@@ -1,5 +1,6 @@
 import {Todo, Sub, todoArr} from "./m_todoClass.js";
 import { subLister } from "./m_subListFuncs.js";
+import { format } from "date-fns";
 
 const mainBody = document.querySelector('#mainBody');
 const addTodo = document.querySelector('.addTodo')
@@ -49,24 +50,33 @@ Todo.prototype.generate = function(){
     
     //priority options
     todo.appendChild(priorityDiv)
-    const pOptions = ['', 'Low','Medium','High', 'Urgent']
-    for (let i = 0; i <= pOptions.length - 1; i++){
+    const optionsArr = ['', 'Low','Medium','High', 'Urgent']
+    for (let i = 0; i <= optionsArr.length - 1; i++){
         const option = document.createElement('option');
-        option.setAttribute('value', `${pOptions[i]}`)
-        option.textContent = pOptions[i]
+        option.setAttribute('value', `${optionsArr[i]}`)
+        option.textContent = optionsArr[i]
         pSelect.appendChild(option)
     }
     
-    //due date
+    //due date and time
     const dateDiv= document.createElement('div');
     dateDiv.classList.add('dateDiv')    
     const dateInput= document.createElement('input');
     dateInput.classList.add('dateInput')
-    dateInput.setAttribute('type', 'date')
-    dateInput.addEventListener('change', () => this.dueDate = dateInput.value)
+    dateInput.setAttribute('type', 'datetime-local')
+    //yyyy-mm-ddT00:00
+
+    dateInput.addEventListener('change', () => {
+        // const minTime = format(new Date(), "yyyy'-'MM'-'DD'T'hh':'mm")
+        // dateInput.setAttribute('min', minTime)
+        this.dueDate = dateInput.value
+        // console.log(minTime)
+    })
     dateDiv.appendChild(dateInput)
     main.appendChild(dateDiv)
 
+    
+    
     //creates subtasks and subtask seciton
     const addSub = document.createElement('button');
     addSub.textContent = 'Add task'
