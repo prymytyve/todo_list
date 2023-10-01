@@ -16,7 +16,6 @@ export default Todo.prototype.inputMode = function(){
     const task = document.createElement('input');
     task.classList.add('task');
     task.addEventListener('keyup', () => this.task = task.value)
-    todo.appendChild(task)
 
     //////////////////////////////////
     //priority selection////////////// 
@@ -25,11 +24,9 @@ export default Todo.prototype.inputMode = function(){
     const pLabel= document.createElement('label');
     pLabel.textContent = 'Priority: ';
     pLabel.classList.add('pLabel')
-    pLabel.setAttribute('for', 'priority')
     const pSelect= document.createElement('select');
     pSelect.addEventListener('change', () => this.priority = pSelect.value)
     pSelect.classList.add('pSelect')
-    pSelect.setAttribute('id', 'priority')
     priorityDiv.appendChild(pLabel)
     priorityDiv.appendChild(pSelect)
     
@@ -46,7 +43,9 @@ export default Todo.prototype.inputMode = function(){
     //////////////////////////////////
     //duedate and time///////////////
     const dateDiv= document.createElement('div');
-    dateDiv.classList.add('dateDiv')    
+    dateDiv.classList.add('dateDiv')   
+    const dLabel = document.createElement('label')
+    dLabel.textContent = 'Due: '; 
     const dateInput= document.createElement('input');
     dateInput.classList.add('dateInput')
     dateInput.setAttribute('type', 'datetime-local')
@@ -54,6 +53,7 @@ export default Todo.prototype.inputMode = function(){
     dateInput.addEventListener('change', () => {
         this.dueDate = dateInput.value
     })
+    dateDiv.appendChild(dLabel)
     dateDiv.appendChild(dateInput)
     main.appendChild(dateDiv)
 
@@ -94,7 +94,8 @@ export default Todo.prototype.inputMode = function(){
 
 
     //////////////////////////////////////
-        //appends main parts of todo/////
+    //appends main parts of todo/////
+    todo.appendChild(task)
     todo.appendChild(main)
     todo.appendChild(editBox)
     todo.appendChild(sub)
