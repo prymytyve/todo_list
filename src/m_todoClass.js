@@ -32,9 +32,8 @@ class Todo {
         this._dueDate = val
     }
 
-
     get task(){
-        return this._task 
+        return this._task
     }
 
     get priority(){
@@ -48,7 +47,7 @@ class Todo {
     //     val === true? this._completed = true: this._completed = false;
     // }
     delete = (v) => {
-        const i = todoArr.indexOf(this);
+        const i = todoArr.indexOf(this)
         todoArr.splice(i,1)
     }
 }
@@ -65,18 +64,21 @@ class Sub{
     
     add = (v) => {v.push(this)}
     delete = (v) => {
-        const i = v.indexOf(this);
+        const i = v.indexOf(this)
         v.splice(i,1)
     }
 
+    get task(){
+        return this_task
+    }
 
     set task(val){
-        this._subTask = val     
+        this._subTask = val
     }
 
     set type(val){
-        val === true?this._type = 'task':this._type = 'note';
+        val === true?this._type = 'task':this._type = 'note'
     }
 }
 
-export {Todo, Sub, todoArr};
+export {Todo, Sub, todoArr}
