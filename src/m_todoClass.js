@@ -1,3 +1,4 @@
+import format from "date-fns/format";
 const mainBody = document.querySelector('#mainBody');
 
 const todoArr = [];
@@ -12,7 +13,7 @@ class Todo {
     }    
     add = () => {todoArr.push(this)}
 
-    _dateCreated = new Date()
+    _dateCreated = format(new Date(), "eeee', 'MMM dd','yyyy' at' hh:mm' 'aaa")
     _completed = false
     _subList = []
 

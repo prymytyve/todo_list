@@ -51,7 +51,7 @@ export default Todo.prototype.inputMode = function(){
     dateInput.setAttribute('type', 'datetime-local')
  
     dateInput.addEventListener('change', () => {
-        this.dueDate = dateInput.value
+        this.dueDate = format(new Date(dateInput.value), "eeee', 'MMM dd','yyyy' at' hh:mm' 'aaa")
     })
     dateDiv.appendChild(dSpan)
     dateDiv.appendChild(dateInput)
