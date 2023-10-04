@@ -2,6 +2,7 @@ import format from "date-fns/format";
 const mainBody = document.querySelector('#mainBody');
 
 const todoArr = [];
+const projArr = ['Default'];
 
 class Todo {
     constructor(task, priority, dueDate, ...subTodos){
@@ -14,42 +15,65 @@ class Todo {
     add = () => {todoArr.push(this)}
 
     _dateCreated = format(new Date(), "eeee', 'MMM dd','yyyy' at' hh:mm' 'aaa")
+    _project = 'Default'
     _completed = false
     _subList = []
 
-    get subList(){
-        return this._subList
-    }
 
+
+    get task(){
+        return this._task;
+    }
+    
     set task(val){
         this._task = val
+    }
+
+    
+    get priority(){
+        return this._priority;
     }
 
     set priority(val){
         this._priority = val
     }
-   
+
+    get dueDate(){
+        return this._dueDate;
+    }
+
+    get project(){
+        return this._project;
+    }
+
+    set project(v){
+        this._project = v
+    }
+
     set dueDate(val){
         this._dueDate = val
     }
 
-    get task(){
-        return this._task
+    get subList(){
+        return this._subList;
     }
 
-    get priority(){
-        return this._priority
-    }
-   
-    get dueDate(){
-        return this._dueDate
-    }
+    
     // set completed(val){
     //     val === true? this._completed = true: this._completed = false;
-    // }
+    // }      
     delete = (v) => {
         const i = todoArr.indexOf(this)
         todoArr.splice(i,1)
+    }
+
+    addProj = (v) => {
+        projArr.push(v)   
+    }
+
+    delProj = (v) => {
+        const i = projArr.indexOf(v)
+        projArr.splice(i,1)
     }
 }
 
@@ -82,4 +106,4 @@ class Sub{
     }
 }
 
-export {Todo, Sub, todoArr}
+export {Todo, Sub, todoArr, projArr}

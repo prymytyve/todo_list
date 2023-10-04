@@ -1,4 +1,4 @@
-import {Todo, Sub, todoArr} from "./m_todoClass.js";
+import {Todo, Sub, todoArr, projArr} from "./m_todoClass.js";
 import { subLister } from "./m_subListFuncs.js";
 import { format } from "date-fns";
 
@@ -56,6 +56,30 @@ export default Todo.prototype.inputMode = function(){
     dateDiv.appendChild(dSpan)
     dateDiv.appendChild(dateInput)
     main.appendChild(dateDiv)
+
+    ////////////////////////////////////
+    //projects//////////////////////////
+    const projectDiv = document.createElement('div');
+    projectDiv.classList.add('projectDiv')
+    const projSpan= document.createElement('span');
+    projSpan.textContent = 'Project: ';
+    projSpan.classList.add('projSpan')
+    const projSelect= document.createElement('select');
+    projSelect.addEventListener('change', () => this.project = projSelect.value)
+    projSelect.classList.add('projSelect')
+    projectDiv.appendChild(projSpan)
+    projectDiv.appendChild(projSelect)
+    
+    //project options
+    for (let i = 0; i <= projArr.length - 1; i++){
+        const projOption = document.createElement('option');
+        projOption.setAttribute('value', `${projArr[i]}`)
+        projOption.textContent = projArr[i]
+        projSelect.appendChild(projOption)
+    }
+    todo.appendChild(projectDiv)
+
+
 
     /////////////////////////////////
     //Edit todo buttons//////////////////
