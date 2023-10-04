@@ -7,7 +7,7 @@ import printMode from "./printMode.js";
 
 export default Todo.prototype.inputMode = function(){
     const todo = document.createElement('form'); 
-    todo.classList.add('todo')   
+    todo.classList.add('todo', 'inputMode')   
     const main = document.createElement('ul');
     main.classList.add('main')
     const sub = document.createElement('ul');
