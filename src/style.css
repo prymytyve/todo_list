@@ -52,3 +52,9 @@ nav{
     /* display: grid;
     justify-items: self-end; */
 }
+
+p{
+    display: inline-block;
+    margin: 0px;
+    padding: 0px;
+}

@@ -2,6 +2,7 @@ import {Todo, Sub, todoArr} from "./m_todoClass.js";
 import { subLister } from "./m_subListFuncs.js";
 import { format } from "date-fns";
 import { projArr } from "./m_projects.js";
+import printMode from "./printMode.js";
 
 
 export default Todo.prototype.inputMode = function(){
@@ -16,6 +17,7 @@ export default Todo.prototype.inputMode = function(){
     //task name///////////////////////
     const task = document.createElement('input');
     task.classList.add('task');
+    task.setAttribute('value', this.task)
     task.addEventListener('keyup', () => this.task = task.value)
 
     //////////////////////////////////
@@ -26,6 +28,7 @@ export default Todo.prototype.inputMode = function(){
     pSpan.textContent = 'Priority: ';
     pSpan.classList.add('pSpan')
     const pSelect= document.createElement('select');
+    pSelect.setAttribute('value', this.priority)
     pSelect.addEventListener('change', () => this.priority = pSelect.value)
     pSelect.classList.add('pSelect')
     priorityDiv.appendChild(pSpan)
@@ -50,9 +53,11 @@ export default Todo.prototype.inputMode = function(){
     const dateInput= document.createElement('input');
     dateInput.classList.add('dateInput')
     dateInput.setAttribute('type', 'datetime-local')
+    dateInput.setAttribute('value', this.unDueDate )
  
     dateInput.addEventListener('change', () => {
-        this.dueDate = format(new Date(dateInput.value), "eeee', 'MMM dd','yyyy' at' hh:mm' 'aaa")
+        this.unDueDate = dateInput.value
+        this.dueDate = format(new Date(dateInput.value), "eeee', 'MMM dd', 'yyyy' at' hh:mm' 'aaa")
     })
     dateDiv.appendChild(dSpan)
     dateDiv.appendChild(dateInput)
@@ -93,6 +98,8 @@ export default Todo.prototype.inputMode = function(){
     finBtn.textContent = 'Done'
     finBtn.addEventListener('click', (e) => {
         e.preventDefault()
+        const thisTodoDiv = document.querySelector(`.${this.id}`)
+        thisTodoDiv.replaceChildren(this.printMode())
     })
     editBox.appendChild(finBtn)
 
@@ -103,7 +110,8 @@ export default Todo.prototype.inputMode = function(){
     delBtn.addEventListener('click', (e) => {
         e.preventDefault()
         this.delete()
-        mainBody.removeChild(todo)
+        const thisTodoDiv = document.querySelector(`.${this.id}`)
+        mainBody.removeChild(thisTodoDiv)
     })
     editBox.appendChild(delBtn)
     
@@ -124,5 +132,5 @@ export default Todo.prototype.inputMode = function(){
     todo.appendChild(main)
     todo.appendChild(editBox)
     todo.appendChild(sub)
-    mainBody.appendChild(todo)
+    return todo
 }

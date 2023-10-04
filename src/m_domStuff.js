@@ -9,15 +9,16 @@ function todoCreator(){
     //creates 
     addTodo.addEventListener('click', () =>{
         const todo = new Todo();
-        todo.inputMode()
+        const todoDiv = document.createElement('div')
+        todoDiv.classList.add(`${todo.id}`, 'todoDiv')
+        todoDiv.appendChild(todo.inputMode())
+        mainBody.appendChild(todoDiv)
     })   
 
-    // const b = document.createElement('button');
-    // b.textContent = 'check'
-    // b.addEventListener('click', () => console.log(todoArr))
-    // mainBody.append(b)
+    const b = document.createElement('button');
+    b.textContent = 'check'
+    b.addEventListener('click', () => console.log(todoArr))
+    mainBody.append(b)
 }
-
-
 
 export default todoCreator

@@ -1,23 +1,25 @@
 import format from "date-fns/format";
+import { v4 as uuidv4 } from 'uuid';
 const mainBody = document.querySelector('#mainBody');
 
 const todoArr = [];
 
 
 class Todo {
-    constructor(task, priority, dueDate, ...subTodos){
-        this._task = task
-        this._priority = priority
-        this._dueDate = dueDate
-        subTodos.forEach(sub => new Sub(sub, this._subList))
+    constructor(){   
         this.add()
-    }    
+    }
+
     add = () => {todoArr.push(this)}
 
-    _dateCreated = format(new Date(), "eeee', 'MMM dd','yyyy' at' hh:mm' 'aaa")
+    _task = ''
+    _priority = ''
+    _dueDate = ''
+    _dateCreated = format(new Date(), "eeee', 'MMM dd', 'yyyy' at' hh:mm' 'aaa")
     _project = 'Default'
     _completed = false
     _subList = []
+    _id = 'id'+uuidv4()
 
 
 
@@ -50,12 +52,23 @@ class Todo {
         this._project = v
     }
 
+    get unDueDate(){          //unformatted date
+      return this._unDueDate
+    }
+    set unDueDate(v){
+        this._unDueDate = v
+    }
+    
     set dueDate(val){
         this._dueDate = val
     }
 
     get subList(){
         return this._subList;
+    }
+
+    get id(){
+        return this._id;
     }
 
     
@@ -96,3 +109,12 @@ class Sub{
 }
 
 export {Todo, Sub, todoArr}
+
+
+// constructor(task, priority, dueDate, ...subTodos){
+//     this._task = task
+//     this._priority = priority
+//     this._dueDate = dueDate
+//     subTodos.forEach(sub => new Sub(sub, this._subList))
+//     this.add()
+// }
