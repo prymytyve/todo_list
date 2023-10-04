@@ -12,13 +12,19 @@ export default Todo.prototype.inputMode = function(){
     main.classList.add('main')
     const sub = document.createElement('ul');
     sub.classList.add('sub')
+    const finBtn = document.createElement('button');
+    finBtn.disabled = true;
 
     ///////////////////////////////////
     //task name///////////////////////
     const task = document.createElement('input');
     task.classList.add('task');
     task.setAttribute('value', this.task)
-    task.addEventListener('keyup', () => this.task = task.value)
+    task.addEventListener('keyup', () => {
+        this.task = task.value
+        task.value.length === 0? finBtn.disabled = true: finBtn.disabled = false; 
+    })
+
 
     //////////////////////////////////
     //priority selection////////////// 
@@ -93,7 +99,6 @@ export default Todo.prototype.inputMode = function(){
     editBox.classList.add('editBox')
     
     //finish editing todo
-    const finBtn = document.createElement('button');
     finBtn.classList.add('finBtn')
     finBtn.textContent = 'Done'
     finBtn.addEventListener('click', (e) => {
