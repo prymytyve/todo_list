@@ -1,6 +1,7 @@
-import {Todo, Sub, todoArr, projArr} from "./m_todoClass.js";
+import {Todo, Sub, todoArr} from "./m_todoClass.js";
 import { subLister } from "./m_subListFuncs.js";
 import { format } from "date-fns";
+import { projArr } from "./m_projects.js";
 
 
 export default Todo.prototype.inputMode = function(){

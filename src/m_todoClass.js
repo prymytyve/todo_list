@@ -2,7 +2,7 @@ import format from "date-fns/format";
 const mainBody = document.querySelector('#mainBody');
 
 const todoArr = [];
-const projArr = ['Default'];
+
 
 class Todo {
     constructor(task, priority, dueDate, ...subTodos){
@@ -66,18 +66,7 @@ class Todo {
         const i = todoArr.indexOf(this)
         todoArr.splice(i,1)
     }
-
-    addProj = (v) => {
-        projArr.push(v)   
-    }
-
-    delProj = (v) => {
-        const i = projArr.indexOf(v)
-        projArr.splice(i,1)
-    }
 }
-
-
 
 class Sub{
     constructor(i, v){
@@ -106,4 +95,4 @@ class Sub{
     }
 }
 
-export {Todo, Sub, todoArr, projArr}
+export {Todo, Sub, todoArr}
