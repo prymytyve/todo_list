@@ -1,6 +1,4 @@
 import {Todo, Sub, todoArr} from "./m_todoClass.js";
-import { subLister } from "./m_subListFuncs.js";
-import { format } from "date-fns";
 import inputMode from "./m_inputMode.js";
 
 

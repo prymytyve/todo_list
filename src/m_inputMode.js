@@ -1,5 +1,4 @@
 import {Todo, Sub, todoArr} from "./m_todoClass.js";
-import { subLister } from "./m_subListFuncs.js";
 import { format } from "date-fns";
 import { projArr } from "./m_projects.js";
 import printMode from "./printMode.js";
@@ -23,8 +22,7 @@ export default Todo.prototype.inputMode = function(){
     task.addEventListener('keyup', () => {
         this.task = task.value
         task.value.length === 0? finBtn.disabled = true: finBtn.disabled = false; 
-    })
-
+    })    
 
     //////////////////////////////////
     //priority selection////////////// 
@@ -92,7 +90,6 @@ export default Todo.prototype.inputMode = function(){
     todo.appendChild(projectDiv)
 
 
-
     /////////////////////////////////
     //Edit todo buttons//////////////////
     const editBox = document.createElement('div')
@@ -125,11 +122,38 @@ export default Todo.prototype.inputMode = function(){
     const addSub = document.createElement('button');
     addSub.textContent = 'Add task'
     addSub.addEventListener('click', (e) => {
+        addSub.disabled = true;
         e.preventDefault()
-        subLister(this.subList, sub, addSub)
+        
+        //creates subItems dom elements
+        const li = document.createElement('li');
+        li.classList.add('subTask')
+        const input = document.createElement('input');
+        const subItem = new Sub(input.value, this.subList)
+        input.addEventListener('keyup', e => {
+            subItem.task = input.value
+            input.value.length === 0? addSub.disabled = true: addSub.disabled = false; //disables addTask button if input is empty     
+        })   
+       
+        //delete subitem
+        const deleteSub = document.createElement('button');
+        deleteSub.textContent = 'X';       
+        deleteSub.addEventListener('click', e => {
+            sub.removeChild(li)
+            subItem.delete(this.subList)
+            if (addSub.disabled === true) addSub.disabled = false;
+        })  
+        li.appendChild(input)
+        li.appendChild(deleteSub)
+        sub.insertBefore(li, addSub)
+    
+        //toggles between note and task. Note = unchecked
+        const togSub = document.createElement('input');
+        togSub.setAttribute('type', 'checkbox')
+        togSub.addEventListener('change', e => subItem.type = togSub.checked)
+        li.insertBefore(togSub,deleteSub)
     })
     sub.appendChild(addSub)
-
 
     //////////////////////////////////////
     //appends main parts of todo/////
@@ -138,4 +162,9 @@ export default Todo.prototype.inputMode = function(){
     todo.appendChild(editBox)
     todo.appendChild(sub)
     return todo
+}
+
+
+function disableDone(a,b){
+    a.value.length === 0? b.disabled = true: b.disabled = false;
 }
