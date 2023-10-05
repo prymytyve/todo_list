@@ -133,7 +133,7 @@ export default Todo.prototype.inputMode = function(){
         const input = document.createElement('input');
         const subItem = new Sub(input.value, this.subList)
         input.addEventListener('keyup', e => {
-            subItem.task = input.value
+            subItem.subTask = input.value
             input.value.length === 0? addSub.disabled = true: addSub.disabled = false; //disables addTask button if input is empty     
             input.value.length === 0 || task.value.length === 0? finBtn.disabled = true: finBtn.disabled = false; 
         }) 
@@ -170,9 +170,9 @@ export default Todo.prototype.inputMode = function(){
             const li = document.createElement('li');
             li.classList.add('subTask')
             const input = document.createElement('input');
-            input.setAttribute('value', i._subTask)
+            input.setAttribute('value', i.subTask)
             input.addEventListener('keyup', e => {
-                i.task = input.value
+                i.subTask = input.value
                 input.value.length === 0? addSub.disabled = true: addSub.disabled = false; //disables addTask button if input is empty     
                 input.value.length === 0 || task.value.length === 0? finBtn.disabled = true: finBtn.disabled = false; 
             }) 

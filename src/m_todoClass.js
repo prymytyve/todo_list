@@ -99,11 +99,11 @@ class Sub{
         val === true? this._completed = true: this._completed = false;
     }   
 
-    get task(){
-        return this_task
+    get subTask(){
+        return this._subTask
     }
 
-    set task(val){
+    set subTask(val){
         this._subTask = val
     }
 
