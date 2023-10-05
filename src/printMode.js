@@ -27,8 +27,7 @@ export default Todo.prototype.printMode = function(){
     pText.textContent = this.priority
     pText.classList.add('pText')
     priorityDiv.appendChild(pSpan)
-    priorityDiv.appendChild(pText)
-    
+    priorityDiv.appendChild(pText)   
 
     main.appendChild(priorityDiv)
     
@@ -61,41 +60,60 @@ export default Todo.prototype.printMode = function(){
     todo2.appendChild(projectDiv)
 
     /////////////////////////////////
-    //Edit todo buttons//////////////////
+    //Edit todo button//////////////////
     const editBox = document.createElement('div')
     editBox.classList.add('editBox')
     
     //finish editing todo
-    const finBtn = document.createElement('button');
-    finBtn.classList.add('finBtn')
-    finBtn.textContent = 'Edit'
-    finBtn.addEventListener('click', (e) => {
+    const editBtn = document.createElement('button');
+    editBtn.classList.add('editBtn')
+    editBtn.textContent = 'Edit'
+    editBtn.addEventListener('click', (e) => {
         e.preventDefault()
         const thisTodoDiv = document.querySelector(`.${this.id}`)
         thisTodoDiv.replaceChildren(this.inputMode())
+        console.log(this.subList.some(checkForSubTasks))
     })
-    editBox.appendChild(finBtn)
+    editBox.appendChild(editBtn)
     
     //////////////////////////////////////
     //adds sublist///////////////////////
-    this.subList.forEach(i => {
-        const li = document.createElement('li');
-        li.classList.add('subTask')
-        const p = document.createElement('p');
-        p.textContent = i._subTask;
-        li.appendChild(p)
-
-        if(i.type === 'task'){
-            const togComplete = document.createElement('input');
-            togComplete.setAttribute('type', 'checkbox')
-            togComplete.addEventListener('change', e => i.completed = togComplete.checked)
-            li.insertBefore(togComplete, p)    
+    if (this.subList.length !== 0){       
+        if (this.subList.some(checkForNotes) === true){
+            const noteSection = document.createElement('ul')
+            noteSection.classList.add('subSection', 'noteSection')
+            noteSection.textContent = 'Notes';
+            const noteItems = this.subList.filter(item => item.type === 'note')
+            noteItems.forEach(item => {
+                const li = document.createElement('li')
+                li.classList.add('subTask', 'note')
+                const p = document.createElement('p')
+                p.textContent =  item.subTask
+                li.appendChild(p)
+                noteSection.appendChild(li)
+            })
+            sub.appendChild(noteSection)
+        } 
+        if (this.subList.some(checkForSubTasks) === true){
+            const taskSection = document.createElement('ul')
+            taskSection.classList.add('subSection', 'subTaskSection')
+            taskSection.textContent = 'Subtasks';
+            const subItems =  this.subList.filter(item => item.type === 'task')
+            subItems.forEach(item => {
+                const li = document.createElement('li')
+                li.classList.add('subTask', 'subTasks')
+                const p = document.createElement('p')
+                p.textContent = item.subTask
+                const togComplete = document.createElement('input');
+                togComplete.setAttribute('type', 'checkbox')
+                togComplete.addEventListener('change', e => item.completed = togComplete.checked)
+                li.appendChild(p)
+                li.insertBefore(togComplete, p)                              
+                taskSection.appendChild(li)               
+            })
+            sub.appendChild(taskSection)
         }
-        
-        sub.appendChild(li)
-    })
-
-
+    }
     //////////////////////////////////////
     //appends main parts of todo/////
     todo2.appendChild(task)
@@ -104,3 +122,7 @@ export default Todo.prototype.printMode = function(){
     todo2.appendChild(sub)
     return todo2
 }
+
+
+const checkForNotes = e => e.type === 'note'
+const checkForSubTasks = e => e.type === 'task'
