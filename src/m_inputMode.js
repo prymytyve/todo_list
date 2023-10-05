@@ -22,8 +22,8 @@ export default Todo.prototype.inputMode = function(){
     task.addEventListener('keyup', () => {
         this.task = task.value
         task.value.length === 0? finBtn.disabled = true: finBtn.disabled = false; 
-    })    
-
+    }) 
+    
     //////////////////////////////////
     //priority selection////////////// 
     const priorityDiv = document.createElement('div');
@@ -84,6 +84,7 @@ export default Todo.prototype.inputMode = function(){
     for (let i = 0; i <= projArr.length - 1; i++){
         const projOption = document.createElement('option');
         projOption.setAttribute('value', `${projArr[i]}`)
+        //if (projOption.value === this.priority) projOption.setAttribute('selected', 'selected'); 
         projOption.textContent = projArr[i]
         projSelect.appendChild(projOption)
     }
@@ -123,6 +124,7 @@ export default Todo.prototype.inputMode = function(){
     addSub.textContent = 'Add task'
     addSub.addEventListener('click', (e) => {
         addSub.disabled = true;
+        finBtn.disabled = true;
         e.preventDefault()
         
         //creates subItems dom elements
@@ -133,6 +135,7 @@ export default Todo.prototype.inputMode = function(){
         input.addEventListener('keyup', e => {
             subItem.task = input.value
             input.value.length === 0? addSub.disabled = true: addSub.disabled = false; //disables addTask button if input is empty     
+            input.value.length === 0 || task.value.length === 0? finBtn.disabled = true: finBtn.disabled = false; 
         })   
        
         //delete subitem
@@ -155,6 +158,10 @@ export default Todo.prototype.inputMode = function(){
     })
     sub.appendChild(addSub)
 
+    todo.addEventListener('change', e =>{
+        task.value.length === 0? finBtn.disabled = true: finBtn.disabled = false;
+    })
+
     //////////////////////////////////////
     //appends main parts of todo/////
     todo.appendChild(task)
@@ -162,9 +169,4 @@ export default Todo.prototype.inputMode = function(){
     todo.appendChild(editBox)
     todo.appendChild(sub)
     return todo
-}
-
-
-function disableDone(a,b){
-    a.value.length === 0? b.disabled = true: b.disabled = false;
 }
