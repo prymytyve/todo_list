@@ -4,7 +4,7 @@ import inputMode from "./m_inputMode.js";
 
 export default Todo.prototype.printMode = function(){
     const todo2 = document.createElement('div'); 
-    todo2.classList.add('todo')   
+    todo2.classList.add('todo', 'printMode')   
     const main = document.createElement('ul');
     main.classList.add('main')
     const sub = document.createElement('ul');
@@ -17,7 +17,7 @@ export default Todo.prototype.printMode = function(){
     task.classList.add('task');
 
     //////////////////////////////////
-    //priority selection////////////// 
+    //priority////////////////////////
     const priorityDiv = document.createElement('div');
     priorityDiv.classList.add('priorityDiv')
     const pSpan= document.createElement('span');
@@ -45,6 +45,21 @@ export default Todo.prototype.printMode = function(){
     dateDiv.appendChild(dText)
     main.appendChild(dateDiv)
 
+
+    ////////////////////////////////////
+    //projects//////////////////////////
+    const projectDiv = document.createElement('div');
+    projectDiv.classList.add('projectDiv')
+    const projSpan= document.createElement('span');
+    projSpan.textContent = 'Project: ';
+    projSpan.classList.add('projSpan')
+    const projText= document.createElement('p');
+    projText.textContent = this.project;
+    projText.classList.add('projText')
+    projectDiv.appendChild(projSpan)
+    projectDiv.appendChild(projText)
+    todo2.appendChild(projectDiv)
+
     /////////////////////////////////
     //Edit todo buttons//////////////////
     const editBox = document.createElement('div')
@@ -60,15 +75,25 @@ export default Todo.prototype.printMode = function(){
         thisTodoDiv.replaceChildren(this.inputMode())
     })
     editBox.appendChild(finBtn)
+    
     //////////////////////////////////////
-    //creates subtasks and subtask section
-    // const addSub = document.createElement('button');
-    // addSub.textContent = 'Add task'
-    // addSub.addEventListener('click', (e) => {
-    //     e.preventDefault()
-    //     subLister(this.subList, sub, addSub)
-    // })
-    // sub.appendChild(addSub)
+    //adds sublist///////////////////////
+    this.subList.forEach(i => {
+        const li = document.createElement('li');
+        li.classList.add('subTask')
+        const p = document.createElement('p');
+        p.textContent = i._subTask;
+        li.appendChild(p)
+
+        if(i.type === 'task'){
+            const togComplete = document.createElement('input');
+            togComplete.setAttribute('type', 'checkbox')
+            togComplete.addEventListener('change', e => i.completed = togComplete.checked)
+            li.insertBefore(togComplete, p)    
+        }
+        
+        sub.appendChild(li)
+    })
 
 
     //////////////////////////////////////
