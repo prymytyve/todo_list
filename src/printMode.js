@@ -10,6 +10,15 @@ export default Todo.prototype.printMode = function(){
     const sub = document.createElement('ul');
     sub.classList.add('sub')
 
+    //marks Todo as completed
+    const completeTodo = document.createElement('input')
+    completeTodo.setAttribute('type', 'checkbox')
+    completeTodo.addEventListener('change', e => {
+        this.completed = completeTodo.checked
+        if(completeTodo.checked === true) todo2.classList.toggle('completed')        
+    })
+    todo2.appendChild(completeTodo)
+
     ///////////////////////////////////
     //task name///////////////////////
     const task = document.createElement('p');
@@ -85,7 +94,7 @@ export default Todo.prototype.printMode = function(){
             const noteItems = this.subList.filter(item => item.type === 'note')
             noteItems.forEach(item => {
                 const li = document.createElement('li')
-                li.classList.add('subTask', 'note')
+                li.classList.add('subItem', 'note')
                 const p = document.createElement('p')
                 p.textContent =  item.subTask
                 li.appendChild(p)
@@ -100,12 +109,15 @@ export default Todo.prototype.printMode = function(){
             const subItems =  this.subList.filter(item => item.type === 'task')
             subItems.forEach(item => {
                 const li = document.createElement('li')
-                li.classList.add('subTask', 'subTasks')
+                li.classList.add('subItem', 'subTask')
                 const p = document.createElement('p')
                 p.textContent = item.subTask
                 const togComplete = document.createElement('input');
                 togComplete.setAttribute('type', 'checkbox')
-                togComplete.addEventListener('change', e => item.completed = togComplete.checked)
+                togComplete.addEventListener('change', e =>{ 
+                    item.completed = togComplete.checked
+                    if(togComplete.checked === true) li.classList.add('completedSub') 
+                })
                 li.appendChild(p)
                 li.insertBefore(togComplete, p)                              
                 taskSection.appendChild(li)               
