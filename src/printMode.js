@@ -72,7 +72,6 @@ export default Todo.prototype.printMode = function(){
         e.preventDefault()
         const thisTodoDiv = document.querySelector(`.${this.id}`)
         thisTodoDiv.replaceChildren(this.inputMode())
-        console.log(this.subList.some(checkForSubTasks))
     })
     editBox.appendChild(editBtn)
     
