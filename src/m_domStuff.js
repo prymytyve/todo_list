@@ -36,7 +36,12 @@ const all = document.querySelector('.all')
 all.addEventListener('click', e =>{
     mainBody.replaceChildren()
     const currentTodos = todoArr.filter(todo => todo.completed === false)
-    currentTodos.forEach(todo => mainBody.appendChild(todo.printMode()))
+    currentTodos.forEach(todo => {
+        const todoDiv = document.createElement('div')
+        todoDiv.classList.add(`${todo.id}`, 'todoDiv')
+        todoDiv.appendChild(todo.printMode())
+        mainBody.appendChild(todoDiv)
+    })
 })
 
 
@@ -45,5 +50,10 @@ const completed = document.querySelector('.completed')
 completed.addEventListener('click', e =>{
     mainBody.replaceChildren()
     const completedTodos = todoArr.filter(todo => todo.completed === true)
-    completedTodos.forEach(todo => mainBody.appendChild(todo.printMode()))
+    completedTodos.forEach(todo =>{
+        const todoDiv = document.createElement('div')
+        todoDiv.classList.add(`${todo.id}`, 'todoDiv')
+        todoDiv.appendChild(todo.printMode())
+        mainBody.appendChild(todoDiv)
+    })
 })
