@@ -70,6 +70,10 @@ class Todo {
     get id(){
         return this._id;
     }
+    
+    get completed(){
+        return this._completed
+    }
 
     set completed(val){
         val === true? this._completed = true: this._completed = false;

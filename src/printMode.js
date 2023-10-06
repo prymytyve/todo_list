@@ -13,6 +13,7 @@ export default Todo.prototype.printMode = function(){
     //marks Todo as completed
     const completeTodo = document.createElement('input')
     completeTodo.setAttribute('type', 'checkbox')
+    if(this.completed === true) completeTodo.setAttribute('checked', 'checked')
     completeTodo.addEventListener('change', e => {
         this.completed = completeTodo.checked
         if(completeTodo.checked === true) todo2.classList.toggle('completed')        
