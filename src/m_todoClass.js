@@ -20,8 +20,7 @@ class Todo {
     _completed = false
     _subList = []
     _id = 'id'+uuidv4()
-
-
+    
 
     get task(){
         return this._task;
@@ -82,6 +81,13 @@ class Todo {
     delete = (v) => {
         const i = todoArr.indexOf(this)
         todoArr.splice(i,1)
+    }
+
+    form = () => {
+        const a = new Date(this.unDueDate)
+        a.setHours(0,0,0,0)
+        const b = a.getTime()
+        return b
     }
 }
 

@@ -31,7 +31,7 @@ mainBody.addEventListener('click', e =>{
     todosInInputMode.length === 0? addTodo.disabled = false: addTodo.disabled = true;    
 })
 
-
+//displays all active todos
 const all = document.querySelector('.all')
 all.addEventListener('click', e =>{
     mainBody.replaceChildren()
@@ -43,6 +43,28 @@ all.addEventListener('click', e =>{
         mainBody.appendChild(todoDiv)
     })
 })
+
+function todaysDate(){
+    const a = new Date()
+    a.setHours(0,0,0,0)
+    const b = a.getTime()
+    return b
+}
+
+// dislays todos that are due today
+const today = document.querySelector('.today')
+today.addEventListener('click', e =>{
+    mainBody.replaceChildren()
+    
+    const todayItems = todoArr.filter(todo => todo.form() === todaysDate() &&  todo.completed === false)
+    todayItems.forEach(todo =>{
+        const todoDiv = document.createElement('div')
+        todoDiv.classList.add(`${todo.id}`, 'todoDiv')
+        todoDiv.appendChild(todo.printMode())
+        mainBody.appendChild(todoDiv)
+    })
+})
+
 
 
 //displays completed todos
