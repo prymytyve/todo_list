@@ -1,10 +1,22 @@
-export const projArr = ['Default'];
+export const projArr = [];
 
-export function addProj(v){
-    projArr.push(v)   
-}
 
-export function delProj(v){
-    const i = projArr.indexOf(v)
-    projArr.splice(i,1)
-}
+export class Project{
+    constructor(projectName){
+        this._projectName = projectName
+        this.add()
+    }
+    add = () => {projArr.push(this)}
+    
+    delete = (v) => {
+        const i = projArr.indexOf(this)
+        projArr.splice(i,1)
+    }
+
+    get projectName(){
+        return this._projectName
+    }
+
+} 
+
+const def = new Project('Default')

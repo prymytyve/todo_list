@@ -2,6 +2,7 @@ import {Todo, Sub, todoArr} from "./m_todoClass.js";
 import m_inputMode from "./m_inputMode.js";
 import printMode from "./printMode.js";
 import format from "date-fns/format";
+import {Project, projArr} from "./m_projects.js";
 
 const mainBody = document.querySelector('#mainBody');
 const addTodo = document.querySelector('.addTodo')
@@ -79,3 +80,50 @@ completed.addEventListener('click', e =>{
         mainBody.appendChild(todoDiv)
     })
 })
+
+const projectsDiv = document.querySelector('.projects')
+const projBtn = document.querySelector('.projBtn')
+
+projBtn.addEventListener('click', e =>{
+    e.preventDefault()
+    projBtn.disabled = true
+    const div = document.createElement('div')
+    div.classList.add('projWin')
+    const input = document.createElement('input')
+  
+    const submit = document.createElement('button')
+    submit.textContent = 'submit';
+    submit.addEventListener('click', (e) =>{
+        e.preventDefault()
+        addProj(input.value)
+        mainBody.removeChild(div)
+        projBtn.disabled = false
+        console.log(projArr)
+    })
+    submit.disabled = true
+    input.addEventListener('input', () => input.value.length === 0? submit.disabled = true: submit.disabled = false)
+    
+
+    const cancel = document.createElement('button')
+    cancel.textContent = 'cancel';
+    cancel.addEventListener('click', e =>{
+        mainBody.removeChild(div)
+        projBtn.disabled = false    
+    })
+
+    div.appendChild(input)
+    div.appendChild(submit)
+    div.appendChild(cancel)
+    mainBody.appendChild(div)   
+})
+
+function addProj(a){
+    const project = new Project(a)
+    const projDiv = document.createElement('div')
+    projDiv.classList.add('project')
+    const proj = document.createElement('p')
+    proj.textContent = project.projectName
+    projDiv.appendChild(proj)
+    projectsDiv.insertBefore(projDiv, projBtn)
+}
+

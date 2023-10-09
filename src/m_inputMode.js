@@ -1,6 +1,6 @@
 import {Todo, Sub, todoArr} from "./m_todoClass.js";
 import { format } from "date-fns";
-import { projArr } from "./m_projects.js";
+import {Project, projArr } from "./m_projects.js";
 import printMode from "./printMode.js";
 
 
@@ -43,6 +43,7 @@ export default Todo.prototype.inputMode = function(){
     for (let i = 0; i <= optionsArr.length - 1; i++){
         const option = document.createElement('option');
         option.setAttribute('value', `${optionsArr[i]}`)
+        if (optionsArr[i] === this.priority) option.setAttribute('selected', 'selected');
         option.textContent = optionsArr[i]
         pSelect.appendChild(option)
     }
@@ -83,9 +84,8 @@ export default Todo.prototype.inputMode = function(){
     //project options
     for (let i = 0; i <= projArr.length - 1; i++){
         const projOption = document.createElement('option');
-        projOption.setAttribute('value', `${projArr[i]}`)
-        // if (projArr[i] === this.priority) projOption.setAttribute('selected', 'selected'); 
-        projOption.textContent = projArr[i]
+        projOption.setAttribute('value', `${projArr[i]._projectName}`)         
+        projOption.textContent = projArr[i].projectName
         projSelect.appendChild(projOption)
     }
     todo.appendChild(projectDiv)
