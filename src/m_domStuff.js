@@ -123,6 +123,17 @@ function addProj(a){
     projDiv.classList.add('project')
     const proj = document.createElement('p')
     proj.textContent = project.projectName
+    proj.addEventListener('click', e =>{
+        e.preventDefault()
+        mainBody.replaceChildren()
+        const projectTodos = todoArr.filter(todo => todo.project === project.projectName)
+        projectTodos.forEach(todo =>{
+            const todoDiv = document.createElement('div')
+            todoDiv.classList.add(`${todo.id}`, 'todoDiv')
+            todoDiv.appendChild(todo.printMode())
+            mainBody.appendChild(todoDiv)
+        })
+    })
     projDiv.appendChild(proj)
     projectsDiv.insertBefore(projDiv, projBtn)
 }
