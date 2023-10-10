@@ -134,7 +134,15 @@ function addProj(a){
             mainBody.appendChild(todoDiv)
         })
     })
+    const delProjBtn = document.createElement('button')
+    delProjBtn.classList.add('.delProj')
+    delProjBtn.textContent = 'X';
+    delProjBtn.addEventListener('click', e =>{
+        project.delete()
+        projectsDiv.removeChild(projDiv)    
+    })
     projDiv.appendChild(proj)
+    projDiv.appendChild(delProjBtn)
     projectsDiv.insertBefore(projDiv, projBtn)
 }
 
