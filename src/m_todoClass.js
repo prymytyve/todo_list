@@ -11,7 +11,6 @@ class Todo {
 
     _task = ''
     _priority = ''
-    _dueDate = ''
     _dateCreated = format(new Date(), "eeee', 'MMM dd', 'yyyy' at' hh:mm' 'aaa")
     _project = 'Default'
     _completed = false
@@ -37,7 +36,10 @@ class Todo {
     }
 
     get dueDate(){
-        return this._dueDate;
+        if(this._unDueDate!=''){
+            const o =  format(new Date(this._unDueDate), "eeee', 'MMM dd', 'yyyy' at' hh:mm' 'aaa")
+        return o
+        }
     }
 
     get project(){
@@ -61,6 +63,10 @@ class Todo {
 
     get subList(){
         return this._subList;
+    }
+
+    set subList(v){
+        this._subList = v;
     }
 
     get id(){
@@ -87,6 +93,7 @@ class Todo {
         return b
     }
 }
+
 
 class Sub{
     constructor(i, v){

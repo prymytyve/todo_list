@@ -23,7 +23,6 @@ export default Todo.prototype.inputMode = function(a){
     task.classList.add('task');
     task.setAttribute('value', this.task)
     task.addEventListener('keyup', () => {
-        this.task = task.value
         task.value.length === 0? finBtn.disabled = true: finBtn.disabled = false; 
         task.value.length === 0?submitBtn.disabled = true: submitBtn.disabled = false;
     }) 
@@ -37,7 +36,6 @@ export default Todo.prototype.inputMode = function(a){
     pSpan.classList.add('pSpan')
     const pSelect= document.createElement('select');
     pSelect.setAttribute('value', this.priority)
-    pSelect.addEventListener('change', () => this.priority = pSelect.value)
     pSelect.classList.add('pSelect')
     priorityDiv.appendChild(pSpan)
     priorityDiv.appendChild(pSelect)
@@ -53,8 +51,8 @@ export default Todo.prototype.inputMode = function(a){
     }
     main.appendChild(priorityDiv)
     
-    //////////////////////////////////
-    //duedate and time///////////////
+    ////////////////////////////////////////////////////////////////////////////////////
+    //duedate and time/////////////////////////////////////////////////////////////////
     const dateDiv= document.createElement('div');
     dateDiv.classList.add('dateDiv')   
     const dSpan = document.createElement('span')
@@ -64,23 +62,18 @@ export default Todo.prototype.inputMode = function(a){
     dateInput.setAttribute('type', 'datetime-local')
     dateInput.setAttribute('value', this.unDueDate )
  
-    dateInput.addEventListener('change', () => {
-        this.unDueDate = dateInput.value
-        this.dueDate = format(new Date(dateInput.value), "eeee', 'MMM dd', 'yyyy' at' hh:mm' 'aaa")
-    })
     dateDiv.appendChild(dSpan)
     dateDiv.appendChild(dateInput)
     main.appendChild(dateDiv)
 
-    ////////////////////////////////////
-    //projects//////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
+    //projects//////////////////////////////////////////////////////////////////////////
     const projectDiv = document.createElement('div');
     projectDiv.classList.add('projectDiv')
     const projSpan= document.createElement('span');
     projSpan.textContent = 'Project: ';
     projSpan.classList.add('projSpan')
     const projSelect= document.createElement('select');
-    projSelect.addEventListener('change', () => this.project = projSelect.value)
     projSelect.classList.add('projSelect')
     projectDiv.appendChild(projSpan)
     projectDiv.appendChild(projSelect)
@@ -95,19 +88,23 @@ export default Todo.prototype.inputMode = function(a){
     todo.appendChild(projectDiv)
 
 
-    /////////////////////////////////
-    //Edit todo buttons//////////////////
+    //////////////////////////////////////////////////////////////////////////////////
+    //Edit todo buttons///////////////////////////////////////////////////////////////
     const editBox = document.createElement('div');
     editBox.classList.add('editBox');
 
-    
-    const creationBtns = () =>{
-        
+    //this fucntion contains the buttons that are loaded during todo creation  
+    const creationBtns = () =>{       
         submitBtn.classList.add('submitTodo');
         submitBtn.textContent = 'Submit';
         submitBtn.addEventListener('click', e =>{
             e.preventDefault()
             console.log(this)
+            this.task = task.value;
+            this.priority = pSelect.value;
+            this.unDueDate = dateInput.value;
+            this.project = projSelect.value;
+            this.subList = tempArr;            
             this.add()
             const thisTodoDiv = document.querySelector(`.${this.id}`)
             thisTodoDiv.replaceChildren(this.printMode())
@@ -125,17 +122,43 @@ export default Todo.prototype.inputMode = function(a){
         editBox.appendChild(cancel)
     }   
     
-    
+    // set of buttons that load when switching from input mode 
     const editBtns =() =>{
         //finish editing todo
         finBtn.classList.add('finBtn')
         finBtn.textContent = 'Done'
         finBtn.addEventListener('click', (e) => {
             e.preventDefault()
+            this.task = task.value;
+            this.priority = pSelect.value;
+            this.unDueDate = dateInput.value;
+            this.project = projSelect.value;
             const thisTodoDiv = document.querySelector(`.${this.id}`)
             thisTodoDiv.replaceChildren(this.printMode())
         })
         editBox.appendChild(finBtn)
+
+        //cancel buttons cancels any changes made to the todo
+        const cancel = document.createElement('button');
+        cancel.classList.add('.cancelTodo');
+        cancel.textContent = 'Cancel';
+        cancel.addEventListener('click', e =>{
+            e.preventDefault()
+            
+            
+            //functions below are needed to reset values of subList without a deep clone of original sublist objects
+            const newSubs = []
+            tempArr2.forEach(a => {
+                const newSub = new Sub(a[0], newSubs)
+                newSub.type = a[1]
+            })
+            this.subList = newSubs;
+
+            const thisTodoDiv = document.querySelector(`.${this.id}`)
+            thisTodoDiv.replaceChildren(this.printMode())
+        })
+        editBox.appendChild(cancel)
+
     
         //delete todo button
         const delBtn = document.createElement('button');
@@ -151,8 +174,11 @@ export default Todo.prototype.inputMode = function(a){
     }
     
     a!=null?creationBtns():editBtns();
-    //////////////////////////////////////
-    //creates subtasks and subtask section
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    //creates subtasks and subtask section////////////////////////////////////////////////////
+    const tempArr = new Array();
+   
     const addSub = document.createElement('button');
     addSub.textContent = 'Add task'
     addSub.addEventListener('click', (e) => {
@@ -165,7 +191,9 @@ export default Todo.prototype.inputMode = function(a){
         const li = document.createElement('li');
         li.classList.add('subTask')
         const input = document.createElement('input');
-        const subItem = new Sub(input.value, this.subList)
+        let currentArray;
+        a!=null? currentArray=tempArr: currentArray=this.subList;
+        const subItem = new Sub(input.value,currentArray)
         input.addEventListener('keyup', e => {
             subItem.subTask = input.value
             input.value.length === 0? addSub.disabled = true: addSub.disabled = false; //disables addTask button if input is empty     
@@ -200,8 +228,17 @@ export default Todo.prototype.inputMode = function(a){
     })
 
     //When returning to inputMode, below will set existing subItems as values for inputs
+    const tempArr2 = [] //needed to reset subList when pressing cancel
     if(this.subList.length !== 0){
         this.subList.forEach(i => {
+            
+
+            const previousValues = []
+            previousValues.push(i.subTask)
+            previousValues.push(i.type)
+
+            tempArr2.push(previousValues)
+
             const li = document.createElement('li');
             li.classList.add('subTask')
             const input = document.createElement('input');
@@ -211,7 +248,8 @@ export default Todo.prototype.inputMode = function(a){
                 input.value.length === 0? addSub.disabled = true: addSub.disabled = false; //disables addTask button if input is empty     
                 input.value.length === 0 || task.value.length === 0? finBtn.disabled = true: finBtn.disabled = false; 
             }) 
-        
+            
+            //deletes subList item
             const deleteSub = document.createElement('button');
             deleteSub.textContent = 'X';       
             deleteSub.addEventListener('click', e => {
@@ -233,8 +271,8 @@ export default Todo.prototype.inputMode = function(a){
         })    
     }
 
-    //////////////////////////////////////
-    //appends main parts of todo/////
+    //////////////////////////////////////////////////////////////////////
+    //appends main parts of todo/////////////////////////////////////////
     todo.appendChild(task)
     todo.appendChild(main)
     todo.appendChild(editBox)
