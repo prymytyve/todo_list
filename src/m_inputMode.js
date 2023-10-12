@@ -99,13 +99,14 @@ export default Todo.prototype.inputMode = function(a){
         submitBtn.textContent = 'Submit';
         submitBtn.addEventListener('click', e =>{
             e.preventDefault()
-            console.log(this)
+            
             this.task = task.value;
             this.priority = pSelect.value;
             this.unDueDate = dateInput.value;
             this.project = projSelect.value;
-            this.subList = tempArr;            
+            this.subList = tempArr.filter(i => i.subTask !='');       
             this.add()
+            console.log(this)
             const thisTodoDiv = document.querySelector(`.${this.id}`)
             thisTodoDiv.replaceChildren(this.printMode())
         })
@@ -133,6 +134,8 @@ export default Todo.prototype.inputMode = function(a){
             this.priority = pSelect.value;
             this.unDueDate = dateInput.value;
             this.project = projSelect.value;
+            const filteredSubList = this.subList.filter(i => i.subTask !=''); 
+            this.subList = filteredSubList;
             const thisTodoDiv = document.querySelector(`.${this.id}`)
             thisTodoDiv.replaceChildren(this.printMode())
         })
