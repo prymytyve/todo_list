@@ -31,6 +31,10 @@ nav{
     padding: 5px 3px;
 }
 
+.creating{
+    background-color: yellow;
+}
+
 .task{
     grid-column: 1/3;
 }

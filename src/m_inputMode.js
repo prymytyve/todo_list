@@ -4,15 +4,18 @@ import {Project, projArr } from "./m_projects.js";
 import printMode from "./printMode.js";
 
 
-export default Todo.prototype.inputMode = function(){
+export default Todo.prototype.inputMode = function(a){
     const todo = document.createElement('form'); 
-    todo.classList.add('todo', 'inputMode')   
+    todo.classList.add('todo', 'inputMode')
+    if(a!=null)todo.classList.add('creating')   
     const main = document.createElement('ul');
     main.classList.add('main')
     const sub = document.createElement('ul');
     sub.classList.add('sub')
     const finBtn = document.createElement('button');
     finBtn.disabled = true;
+    const submitBtn = document.createElement('button')
+    submitBtn.disabled = true;
 
     ///////////////////////////////////
     //task name///////////////////////
@@ -22,6 +25,7 @@ export default Todo.prototype.inputMode = function(){
     task.addEventListener('keyup', () => {
         this.task = task.value
         task.value.length === 0? finBtn.disabled = true: finBtn.disabled = false; 
+        task.value.length === 0?submitBtn.disabled = true: submitBtn.disabled = false;
     }) 
     
     //////////////////////////////////
@@ -93,31 +97,60 @@ export default Todo.prototype.inputMode = function(){
 
     /////////////////////////////////
     //Edit todo buttons//////////////////
-    const editBox = document.createElement('div')
-    editBox.classList.add('editBox')
-    
-    //finish editing todo
-    finBtn.classList.add('finBtn')
-    finBtn.textContent = 'Done'
-    finBtn.addEventListener('click', (e) => {
-        e.preventDefault()
-        const thisTodoDiv = document.querySelector(`.${this.id}`)
-        thisTodoDiv.replaceChildren(this.printMode())
-    })
-    editBox.appendChild(finBtn)
+    const editBox = document.createElement('div');
+    editBox.classList.add('editBox');
 
-    //delete todo button
-    const delBtn = document.createElement('button');
-    delBtn.classList.add('delBtn')
-    delBtn.textContent = 'Delete';
-    delBtn.addEventListener('click', (e) => {
-        e.preventDefault()
-        this.delete()
-        const thisTodoDiv = document.querySelector(`.${this.id}`)
-        mainBody.removeChild(thisTodoDiv)
-    })
-    editBox.appendChild(delBtn)
     
+    const creationBtns = () =>{
+        
+        submitBtn.classList.add('submitTodo');
+        submitBtn.textContent = 'Submit';
+        submitBtn.addEventListener('click', e =>{
+            e.preventDefault()
+            console.log(this)
+            this.add()
+            const thisTodoDiv = document.querySelector(`.${this.id}`)
+            thisTodoDiv.replaceChildren(this.printMode())
+        })
+        editBox.appendChild(submitBtn);
+
+        const cancel = document.createElement('button');
+        cancel.classList.add('.cancelTodo');
+        cancel.textContent = 'Cancel';
+        cancel.addEventListener('click', e =>{
+            e.preventDefault()
+            const thisTodoDiv = document.querySelector(`.${this.id}`)
+            mainBody.removeChild(thisTodoDiv)
+        })
+        editBox.appendChild(cancel)
+    }   
+    
+    
+    const editBtns =() =>{
+        //finish editing todo
+        finBtn.classList.add('finBtn')
+        finBtn.textContent = 'Done'
+        finBtn.addEventListener('click', (e) => {
+            e.preventDefault()
+            const thisTodoDiv = document.querySelector(`.${this.id}`)
+            thisTodoDiv.replaceChildren(this.printMode())
+        })
+        editBox.appendChild(finBtn)
+    
+        //delete todo button
+        const delBtn = document.createElement('button');
+        delBtn.classList.add('delBtn')
+        delBtn.textContent = 'Delete';
+        delBtn.addEventListener('click', (e) => {
+            e.preventDefault()
+            this.delete()
+            const thisTodoDiv = document.querySelector(`.${this.id}`)
+            mainBody.removeChild(thisTodoDiv)
+        })
+        editBox.appendChild(delBtn)
+    }
+    
+    a!=null?creationBtns():editBtns();
     //////////////////////////////////////
     //creates subtasks and subtask section
     const addSub = document.createElement('button');
@@ -125,6 +158,7 @@ export default Todo.prototype.inputMode = function(){
     addSub.addEventListener('click', (e) => {
         addSub.disabled = true;
         finBtn.disabled = true;
+        submitBtn.disabled = true;
         e.preventDefault()        
         
         //creates subItems dom elements
@@ -136,6 +170,7 @@ export default Todo.prototype.inputMode = function(){
             subItem.subTask = input.value
             input.value.length === 0? addSub.disabled = true: addSub.disabled = false; //disables addTask button if input is empty     
             input.value.length === 0 || task.value.length === 0? finBtn.disabled = true: finBtn.disabled = false; 
+            input.value.length === 0 || task.value.length === 0? submitBtn.disabled = true: submitBtn.disabled = false; 
         }) 
 
         //delete subitem
@@ -206,5 +241,4 @@ export default Todo.prototype.inputMode = function(){
     todo.appendChild(sub)
     return todo
 }
-
 

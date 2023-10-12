@@ -13,7 +13,7 @@ export default function todoCreator(){
         const todo = new Todo();
         const todoDiv = document.createElement('div')
         todoDiv.classList.add(`${todo.id}`, 'todoDiv')
-        todoDiv.appendChild(todo.inputMode())
+        todoDiv.appendChild(todo.inputMode('generate'))
         mainBody.appendChild(todoDiv)
 
     })   

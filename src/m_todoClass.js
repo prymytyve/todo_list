@@ -6,10 +6,7 @@ const todoArr = [];
 
 
 class Todo {
-    constructor(){   
-        this.add()
-    }
-
+    
     add = () => {todoArr.push(this)}
 
     _task = ''
