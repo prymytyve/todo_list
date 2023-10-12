@@ -134,7 +134,7 @@ export default Todo.prototype.inputMode = function(a){
             this.priority = pSelect.value;
             this.unDueDate = dateInput.value;
             this.project = projSelect.value;
-            const filteredSubList = this.subList.filter(i => i.subTask !=''); 
+            const filteredSubList = tempArr2.filter(i => i.subTask !=''); 
             this.subList = filteredSubList;
             const thisTodoDiv = document.querySelector(`.${this.id}`)
             thisTodoDiv.replaceChildren(this.printMode())
@@ -147,16 +147,6 @@ export default Todo.prototype.inputMode = function(a){
         cancel.textContent = 'Cancel';
         cancel.addEventListener('click', e =>{
             e.preventDefault()
-            
-            
-            //functions below are needed to reset values of subList without a deep clone of original sublist objects
-            const newSubs = []
-            tempArr2.forEach(a => {
-                const newSub = new Sub(a[0], newSubs)
-                newSub.type = a[1]
-            })
-            this.subList = newSubs;
-
             const thisTodoDiv = document.querySelector(`.${this.id}`)
             thisTodoDiv.replaceChildren(this.printMode())
         })
@@ -195,7 +185,7 @@ export default Todo.prototype.inputMode = function(a){
         li.classList.add('subTask')
         const input = document.createElement('input');
         let currentArray;
-        a!=null? currentArray=tempArr: currentArray=this.subList;
+        a!=null? currentArray=tempArr: currentArray=tempArr2;
         const subItem = new Sub(input.value,currentArray)
         input.addEventListener('keyup', e => {
             subItem.subTask = input.value
@@ -231,17 +221,11 @@ export default Todo.prototype.inputMode = function(a){
     })
 
     //When returning to inputMode, below will set existing subItems as values for inputs
-    const tempArr2 = [] //needed to reset subList when pressing cancel
+    const tempArr2 = [] //creates an array that becomes mew subList when clicking done instead
     if(this.subList.length !== 0){
-        this.subList.forEach(i => {
+        this.subList.forEach(o => {
             
-
-            const previousValues = []
-            previousValues.push(i.subTask)
-            previousValues.push(i.type)
-
-            tempArr2.push(previousValues)
-
+            const i = new Sub(o.subTask, tempArr2) //used to create new Subs from current subTasks
             const li = document.createElement('li');
             li.classList.add('subTask')
             const input = document.createElement('input');
@@ -273,7 +257,6 @@ export default Todo.prototype.inputMode = function(a){
             li.insertBefore(togSub,deleteSub)        
         })    
     }
-
     //////////////////////////////////////////////////////////////////////
     //appends main parts of todo/////////////////////////////////////////
     todo.appendChild(task)
