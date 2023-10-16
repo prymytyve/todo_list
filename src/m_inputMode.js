@@ -2,6 +2,7 @@ import {Todo, Sub, todoArr} from "./m_todoClass.js";
 import { format } from "date-fns";
 import {Project, projArr } from "./m_projects.js";
 import printMode from "./printMode.js";
+import { addProjEvent } from "./m_domStuff.js";
 
 
 export default Todo.prototype.inputMode = function(a){
@@ -75,6 +76,16 @@ export default Todo.prototype.inputMode = function(a){
     projSpan.classList.add('projSpan')
     const projSelect= document.createElement('select');
     projSelect.classList.add('projSelect')
+    
+    const addProjOpt = document.createElement('option')
+    addProjOpt.classList.add('addProjOpt');
+    addProjOpt.setAttribute('value', 'new')
+    addProjOpt.textContent = 'Create project'
+    projSelect.appendChild(addProjOpt)
+    
+    projSelect.addEventListener('click', e =>{
+        if (projSelect.value === 'new') addProjEvent(e)
+    })
     projectDiv.appendChild(projSpan)
     projectDiv.appendChild(projSelect)
     
@@ -83,7 +94,12 @@ export default Todo.prototype.inputMode = function(a){
         const projOption = document.createElement('option');
         projOption.setAttribute('value', `${projArr[i]._projectName}`)         
         projOption.textContent = projArr[i].projectName
-        projSelect.appendChild(projOption)
+        const toolbar = document.querySelector('.toolbar')
+        const data = toolbar.getAttribute('data')
+        let selected;
+        a!=null?selected=data:selected=this.project;
+        if (projArr[i].projectName === selected) projOption.setAttribute('selected', 'selected');             
+        projSelect.insertBefore(projOption, addProjOpt)       
     }
     todo.appendChild(projectDiv)
 

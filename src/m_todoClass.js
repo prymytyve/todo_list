@@ -12,7 +12,7 @@ class Todo {
     _task = ''
     _priority = ''
     _dateCreated = format(new Date(), "eeee', 'MMM dd', 'yyyy' at' hh:mm' 'aaa")
-    _project = 'Default'
+    _project = ''
     _completed = false
     _subList = []
     _id = 'id'+uuidv4()
