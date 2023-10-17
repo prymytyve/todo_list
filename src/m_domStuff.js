@@ -116,7 +116,13 @@ function addProj(a){
     delProjBtn.textContent = 'X';
     delProjBtn.addEventListener('click', e =>{
         project.delete()
-        projectsDiv.removeChild(projDiv)    
+        projectsDiv.removeChild(projDiv)
+        const projSel = document.querySelectorAll('.projSelect')
+        projSel.forEach(p => {
+            p.value='Default'
+            const delMe = document.querySelectorAll(`[value='${project.projectName}']`)
+            delMe.forEach(i => p.removeChild(i))
+        })    
     })
     projDiv.appendChild(proj)
     projDiv.appendChild(delProjBtn)
@@ -137,7 +143,7 @@ export function addProjEvent(e) {
         addProj(input.value)
         mainBody.removeChild(div)
         projBtn.disabled = false
-        console.log(projArr)
+        // console.log(projArr)
         const projSel = document.querySelectorAll('.projSelect')
         projSel.forEach(i =>{
             const addProjOpt = document.querySelector('.addProjOpt')
@@ -146,9 +152,7 @@ export function addProjEvent(e) {
             projOption.textContent = input.value;
             i.insertBefore(projOption, addProjOpt)
             projOption.setAttribute('selected', 'selected')
-        })
-
-        
+        })        
     })
     submit.disabled = true
     input.addEventListener('input', () => input.value.length === 0? submit.disabled = true: submit.disabled = false)
