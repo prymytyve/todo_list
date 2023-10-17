@@ -7,6 +7,7 @@ import {Project, projArr} from "./m_projects.js";
 const mainWrapper = document.querySelector('.mainWrapper')
 const mainBody = document.querySelector('#mainBody');
 const addTodo = document.querySelector('.addTodo')
+const toolbar = document.querySelector('.toolbar')
 
 export function todoCreator(){    
     //creates 
@@ -25,7 +26,7 @@ export function todoCreator(){
     b.addEventListener('click', () => {
         console.log(todoArr)
     })
-    mainBody.append(b)
+    mainWrapper.append(b)
 }
 
 //disables addToDo button if any todo is in inputMode
@@ -34,10 +35,10 @@ mainWrapper.addEventListener('click', e =>{
     todosInInputMode.length === 0? addTodo.disabled = false: addTodo.disabled = true;    
 })
 
-//displays all active todos
-const all = document.querySelector('.all')
-all.addEventListener('click', e =>{
+function resetPage(a, b){
     mainBody.replaceChildren()
+    toolbar.setAttribute('data', a)
+    toolbar.textContent = b;
     const currentTodos = todoArr.filter(todo => todo.completed === false)
     currentTodos.forEach(todo => {
         const todoDiv = document.createElement('div')
@@ -45,7 +46,12 @@ all.addEventListener('click', e =>{
         todoDiv.appendChild(todo.printMode())
         mainBody.appendChild(todoDiv)
     })
-})
+}
+
+
+//displays all active todos
+const all = document.querySelector('.all')
+all.addEventListener('click', e => resetPage('Default', 'All'))
 
 function todaysDate(){
     const a = new Date()
@@ -58,6 +64,8 @@ function todaysDate(){
 const today = document.querySelector('.today')
 today.addEventListener('click', e =>{
     mainBody.replaceChildren()
+    toolbar.setAttribute('data', 'Default' )
+    toolbar.textContent = 'Due Today';
     
     const todayItems = todoArr.filter(todo => todo.form() === todaysDate() &&  todo.completed === false)
     todayItems.forEach(todo =>{
@@ -74,6 +82,8 @@ today.addEventListener('click', e =>{
 const completed = document.querySelector('.completed')
 completed.addEventListener('click', e =>{
     mainBody.replaceChildren()
+    toolbar.setAttribute('data', 'Default')
+    toolbar.textContent = 'Completed';
     const completedTodos = todoArr.filter(todo => todo.completed === true)
     completedTodos.forEach(todo =>{
         const todoDiv = document.createElement('div')
@@ -90,7 +100,7 @@ projBtn.addEventListener('click', e =>{
     addProjEvent(e)
 })
 
-const toolbar = document.querySelector('.toolbar')
+
 
 function addProj(a){
     const project = new Project(a)
@@ -111,18 +121,12 @@ function addProj(a){
             mainBody.appendChild(todoDiv)
         })
     })
+
     const delProjBtn = document.createElement('button')
     delProjBtn.classList.add('.delProj')
     delProjBtn.textContent = 'X';
     delProjBtn.addEventListener('click', e =>{
-        project.delete()
-        projectsDiv.removeChild(projDiv)
-        const projSel = document.querySelectorAll('.projSelect')
-        projSel.forEach(p => {
-            p.value='Default'
-            const delMe = document.querySelectorAll(`[value='${project.projectName}']`)
-            delMe.forEach(i => p.removeChild(i))
-        })    
+        projDelForm(project, projDiv)
     })
     projDiv.appendChild(proj)
     projDiv.appendChild(delProjBtn)
@@ -173,3 +177,61 @@ export function addProjEvent(e) {
     mainBody.appendChild(div)
     div.showModal()   
 }
+
+
+function projDelForm(a, projDiv){
+    const dialog= document.createElement('dialog')
+    dialog.classList.add('delProjTodos')
+    dialog.textContent = 'Delete All Todos in this project?'    
+    const projSel = document.querySelectorAll('.projSelect')
+    const data = toolbar.getAttribute('data')       
+    
+    
+    const todosInProj = todoArr.filter(todo => todo.project === a.projectName)   
+    
+    const yesBtn = document.createElement('button');
+    yesBtn.textContent = 'Yes';
+    yesBtn.addEventListener('click', e =>{
+        e.preventDefault();
+        a.delete()
+        projectsDiv.removeChild(projDiv)
+        projSel.forEach(p => {
+            p.value='Default'
+            const delMe = document.querySelectorAll(`[value='${a.projectName}']`)
+            delMe.forEach(i => p.removeChild(i))    
+        })
+        todosInProj.forEach(i => i.delete())  
+        data === a.projectName?resetPage('Default', 'All'):resetPage(data, data);      
+    })
+    dialog.appendChild(yesBtn)
+
+
+    const noBtn = document.createElement('button');
+    noBtn.textContent = 'No';
+    noBtn.addEventListener('click', e =>{
+        e.preventDefault();
+        a.delete()
+        projectsDiv.removeChild(projDiv)
+        projSel.forEach(p => {
+            p.value='Default'
+            const delMe = document.querySelectorAll(`[value='${a.projectName}']`)
+            delMe.forEach(i => p.removeChild(i))    
+        })
+        todosInProj.forEach(i => i.project ='Default')
+        data === a.projectName?resetPage('Default'):resetPage(data);        
+    })
+    dialog.appendChild(noBtn)   
+
+    const cancelBtn = document.createElement('button');
+    cancelBtn.textContent = 'Cancel';
+    cancelBtn.addEventListener('click', e =>{
+        e.preventDefault();
+        mainBody.removeChild(dialog)
+    })
+    dialog.appendChild(cancelBtn)
+    
+    mainBody.appendChild(dialog)
+    dialog.showModal()
+    // 
+}
+

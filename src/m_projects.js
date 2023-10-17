@@ -17,6 +17,10 @@ export class Project{
         return this._projectName
     }
 
+    set projectName(v){
+        this._projectName = v;
+    }
+
 } 
 
 const def = new Project('Default')
