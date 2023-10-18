@@ -93,6 +93,21 @@ completed.addEventListener('click', e =>{
     })
 })
 
+//displays past due
+const pastDue = document.querySelector('.pastDue')
+pastDue.addEventListener('click', e =>{
+    mainBody.replaceChildren()
+    toolbar.setAttribute('data', 'Default')
+    toolbar.textContent = 'Past due';
+    const pastDueTodos = todoArr.filter(todo => todo.completed === false && todo.form() < todaysDate())
+    pastDueTodos.forEach(todo =>{
+        const todoDiv = document.createElement('div')
+        todoDiv.classList.add(`${todo.id}`, 'todoDiv')
+        todoDiv.appendChild(todo.printMode())
+        mainBody.appendChild(todoDiv)
+    })
+})
+
 const projectsDiv = document.querySelector('.projects')
 const projBtn = document.querySelector('.projBtn')
 
