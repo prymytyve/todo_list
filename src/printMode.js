@@ -7,10 +7,12 @@ export default Todo.prototype.printMode = function(){
     todo2.classList.add('todo', 'printMode')   
     const main = document.createElement('ul');
     main.classList.add('main')
-    const sub = document.createElement('ul');
-    sub.classList.add('sub')
+    const subContainer = document.createElement('ul');
+    subContainer.classList.add('subContainer', 'hidden')
 
     //marks Todo as completed
+    const completeDiv = document.createElement('div')
+    completeDiv.classList.add('completeDiv')
     const completeTodo = document.createElement('input')
     completeTodo.setAttribute('type', 'checkbox')
     if(this.completed === true) completeTodo.setAttribute('checked', 'checked')
@@ -18,7 +20,7 @@ export default Todo.prototype.printMode = function(){
         this.completed = completeTodo.checked
         if(completeTodo.checked === true) todo2.classList.toggle('completed')        
     })
-    todo2.appendChild(completeTodo)
+    completeDiv.appendChild(completeTodo)
 
     ///////////////////////////////////
     //task name///////////////////////
@@ -67,12 +69,24 @@ export default Todo.prototype.printMode = function(){
     projText.classList.add('projText')
     projectDiv.appendChild(projSpan)
     projectDiv.appendChild(projText)
-    todo2.appendChild(projectDiv)
 
     /////////////////////////////////
     //Edit todo button//////////////////
     const editBox = document.createElement('div')
     editBox.classList.add('editBox')
+    
+    //view sublist
+    const subListDisplay = document.createElement('button')
+    subListDisplay.classList.add('subListDisplay', 'subBtn')
+    subListDisplay.textContent = 'Show sublist';
+    subListDisplay.addEventListener('click', e=>{
+        e.preventDefault();
+        subContainer.classList.toggle('display')
+    })
+    if (this.subList.length > 0) editBox.appendChild(subListDisplay);
+    
+    
+    
     
     //finish editing todo
     const editBtn = document.createElement('button');
@@ -83,7 +97,6 @@ export default Todo.prototype.printMode = function(){
         const thisTodoDiv = document.querySelector(`.${this.id}`)
         thisTodoDiv.replaceChildren(this.inputMode())
     })
-    editBox.appendChild(editBtn)
     
     //////////////////////////////////////
     //adds sublist///////////////////////
@@ -101,7 +114,7 @@ export default Todo.prototype.printMode = function(){
                 li.appendChild(p)
                 noteSection.appendChild(li)
             })
-            sub.appendChild(noteSection)
+            subContainer.appendChild(noteSection)
         } 
         if (this.subList.some(checkForSubTasks) === true){
             const taskSection = document.createElement('ul')
@@ -123,15 +136,18 @@ export default Todo.prototype.printMode = function(){
                 li.insertBefore(togComplete, p)                              
                 taskSection.appendChild(li)               
             })
-            sub.appendChild(taskSection)
+            subContainer.appendChild(taskSection)
         }
     }
     //////////////////////////////////////
     //appends main parts of todo/////
+    todo2.appendChild(completeDiv)
+    todo2.appendChild(projectDiv)
+    todo2.appendChild(editBtn)
     todo2.appendChild(task)
     todo2.appendChild(main)
+    todo2.appendChild(subContainer)
     todo2.appendChild(editBox)
-    todo2.appendChild(sub)
     return todo2
 }
 
