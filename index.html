@@ -8,17 +8,20 @@
 <body>
     <nav>
         <div class="mainNav">
-            <div class="navOptions all">All</div>
-            <div class="navOptions today">Today</div>
-            <div class="navOptions completed">Completed</div>
-            <div class="navOptions pastDue">Past due</div>
+            <button class="navOptions all">All</button>
+            <button class="navOptions today">Today</button>
+            <button class="navOptions completed">Completed</button>
+            <button class="navOptions pastDue">Past due</button>
         </div>
         <div class="projects">
             <button class="projBtn">Add Project</button>
         </div>
     </nav>
     <div class="mainWrapper">
-        <div class="toolbar" data="Default">All</div>
+        <div class="toolbar" data="Default">
+            <p class="toolbarText">All</p>
+            <button class="multiDelete">Delete</button>
+        </div>
         <li><button class="addTodo">+</button></li>
         <ul id='mainBody'>
           
