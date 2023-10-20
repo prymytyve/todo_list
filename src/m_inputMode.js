@@ -2,7 +2,7 @@ import {Todo, Sub, todoArr} from "./m_todoClass.js";
 import { format } from "date-fns";
 import {Project, projArr } from "./m_projects.js";
 import printMode from "./printMode.js";
-import { addProjEvent } from "./m_domStuff.js";
+import { addProjEvent, tabFunction } from "./m_domStuff.js";
 
 
 export default Todo.prototype.inputMode = function(a){
@@ -99,8 +99,10 @@ export default Todo.prototype.inputMode = function(a){
         projOption.textContent = projArr[i].projectName
         const toolbar = document.querySelector('.toolbar')
         const data = toolbar.getAttribute('data')
+        let data2;
+        data==='all'||data==='today'||data==='completed'||data==='pastDue'?data2='Default':data2=data;
         let selected;
-        a!=null?selected=data:selected=this.project;
+        a!=null?selected=data2:selected=this.project;
         if (projArr[i].projectName === selected) projOption.setAttribute('selected', 'selected');             
         projSelect.insertBefore(projOption, addProjOpt)       
     }
@@ -215,6 +217,9 @@ export default Todo.prototype.inputMode = function(a){
             console.log(this)
             const thisTodoDiv = document.querySelector(`.${this.id}`)
             thisTodoDiv.replaceChildren(this.printMode())
+            const toolbar = document.querySelector('.toolbar')
+            const data = toolbar.getAttribute('data')
+            tabFunction()
         })
         editBox.appendChild(submitBtn);
 
@@ -244,6 +249,7 @@ export default Todo.prototype.inputMode = function(a){
             this.subList = filteredSubList;
             const thisTodoDiv = document.querySelector(`.${this.id}`)
             thisTodoDiv.replaceChildren(this.printMode())
+            tabFunction()
         })
         editBox.appendChild(finBtn)
 

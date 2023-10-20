@@ -35,24 +35,8 @@ mainWrapper.addEventListener('click', e =>{
     todosInInputMode.length === 0? addTodo.disabled = false: addTodo.disabled = true;    
 })
 
-function resetPage(a, b){
-    mainBody.replaceChildren()
-    toolbar.setAttribute('data', a)
-    toolbar.textContent = b;
-    const currentTodos = todoArr.filter(todo => todo.completed === false)
-    currentTodos.forEach(todo => {
-        const todoDiv = document.createElement('div')
-        todoDiv.classList.add(`${todo.id}`, 'todoDiv')
-        todoDiv.appendChild(todo.printMode())
-        mainBody.appendChild(todoDiv)
-    })
-}
 
-
-//displays all active todos
-const all = document.querySelector('.all')
-all.addEventListener('click', e => resetPage('Default', 'All'))
-
+//function below gets current date
 function todaysDate(){
     const a = new Date()
     a.setHours(0,0,0,0)
@@ -60,20 +44,60 @@ function todaysDate(){
     return b
 }
 
-// dislays todos that are due today
-const today = document.querySelector('.today')
-today.addEventListener('click', e =>{
-    mainBody.replaceChildren()
-    toolbar.setAttribute('data', 'Default' )
-    toolbar.textContent = 'Due Today';
-    
-    const todayItems = todoArr.filter(todo => todo.form() === todaysDate() &&  todo.completed === false)
-    todayItems.forEach(todo =>{
+//appends todos that fit criteria
+function filterTodo(theseTodos){
+    mainBody.replaceChildren()        
+    theseTodos.forEach((todo => {
         const todoDiv = document.createElement('div')
         todoDiv.classList.add(`${todo.id}`, 'todoDiv')
         todoDiv.appendChild(todo.printMode())
         mainBody.appendChild(todoDiv)
-    })
+    }))
+}
+
+
+
+//gets current data attribute of toolbar, and applies functions that will return a filtered array of todos
+export const tabFunction = () =>{
+    const data = toolbar.getAttribute('data')
+    if(data === 'all'){
+        const theseTodos = todoArr.filter(todo =>todo.completed === false);
+        filterTodo(theseTodos)
+    } else if(data==='today'){
+        const theseTodos = todoArr.filter(todo => todo.form() === todaysDate() &&  todo.completed === false);
+        filterTodo(theseTodos);
+    } else if(data==='completed'){
+        const theseTodos = todoArr.filter(todo => todo.completed === true);
+        filterTodo(theseTodos);
+    } else if(data==='pastDue'){
+        const theseTodos = todoArr.filter(todo => todo.completed === false && todo.form() < todaysDate());
+        filterTodo(theseTodos);
+    }  else {
+        const theseTodos = todoArr.filter(todo => todo.project === data);
+        filterTodo(theseTodos);
+    }  
+}
+
+//displays all active todos
+function resetPage(){
+    toolbar.setAttribute('data', 'all')
+    toolbar.textContent = 'All';
+    tabFunction()
+}
+
+
+const all = document.querySelector('.all')
+all.addEventListener('click', e => {
+    resetPage()
+})
+
+
+// dislays todos that are due today
+const today = document.querySelector('.today')
+today.addEventListener('click', e =>{
+    toolbar.setAttribute('data', 'today')
+    toolbar.textContent = 'Today';
+    tabFunction()
 })
 
 
@@ -81,33 +105,22 @@ today.addEventListener('click', e =>{
 //displays completed todos
 const completed = document.querySelector('.completed')
 completed.addEventListener('click', e =>{
-    mainBody.replaceChildren()
-    toolbar.setAttribute('data', 'Default')
+    toolbar.setAttribute('data', 'completed')
     toolbar.textContent = 'Completed';
-    const completedTodos = todoArr.filter(todo => todo.completed === true)
-    completedTodos.forEach(todo =>{
-        const todoDiv = document.createElement('div')
-        todoDiv.classList.add(`${todo.id}`, 'todoDiv')
-        todoDiv.appendChild(todo.printMode())
-        mainBody.appendChild(todoDiv)
-    })
+    tabFunction()
 })
 
 //displays past due
 const pastDue = document.querySelector('.pastDue')
 pastDue.addEventListener('click', e =>{
-    mainBody.replaceChildren()
-    toolbar.setAttribute('data', 'Default')
+    toolbar.setAttribute('data', 'pastDue')
     toolbar.textContent = 'Past due';
-    const pastDueTodos = todoArr.filter(todo => todo.completed === false && todo.form() < todaysDate())
-    pastDueTodos.forEach(todo =>{
-        const todoDiv = document.createElement('div')
-        todoDiv.classList.add(`${todo.id}`, 'todoDiv')
-        todoDiv.appendChild(todo.printMode())
-        mainBody.appendChild(todoDiv)
-    })
+    tabFunction()
 })
 
+
+////////////////////////////////////////////////////////
+///////controls custom projects////////////////////////
 const projectsDiv = document.querySelector('.projects')
 const projBtn = document.querySelector('.projBtn')
 
@@ -116,7 +129,7 @@ projBtn.addEventListener('click', e =>{
 })
 
 
-
+//appends projects to nav bar
 function addProj(a){
     const project = new Project(a)
     const projDiv = document.createElement('div')
@@ -128,7 +141,7 @@ function addProj(a){
         toolbar.setAttribute('data', project.projectName )
         toolbar.textContent = toolbar.getAttribute('data')
         mainBody.replaceChildren()
-        const projectTodos = todoArr.filter(todo => todo.project === project.projectName)
+        const projectTodos = todoArr.filter(todo => todo.project === project.projectName);
         projectTodos.forEach(todo =>{
             const todoDiv = document.createElement('div')
             todoDiv.classList.add(`${todo.id}`, 'todoDiv')
@@ -148,6 +161,7 @@ function addProj(a){
     projectsDiv.insertBefore(projDiv, projBtn)
 }
 
+//below is used to open dialog for creating projects
 export function addProjEvent(e) {
     e.preventDefault()
     projBtn.disabled = true
@@ -193,7 +207,7 @@ export function addProjEvent(e) {
     div.showModal()   
 }
 
-
+//form that handles todos when deleting a project
 function projDelForm(a, projDiv){
     const dialog= document.createElement('dialog')
     dialog.classList.add('delProjTodos')
@@ -216,7 +230,7 @@ function projDelForm(a, projDiv){
             delMe.forEach(i => p.removeChild(i))    
         })
         todosInProj.forEach(i => i.delete())  
-        data === a.projectName?resetPage('Default', 'All'):resetPage(data, data);      
+        data === a.projectName?resetPage():tabFunction();  
     })
     dialog.appendChild(yesBtn)
 
@@ -233,7 +247,7 @@ function projDelForm(a, projDiv){
             delMe.forEach(i => p.removeChild(i))    
         })
         todosInProj.forEach(i => i.project ='Default')
-        data === a.projectName?resetPage('Default'):resetPage(data);        
+        data === a.projectName?resetPage():tabFunction();       
     })
     dialog.appendChild(noBtn)   
 
