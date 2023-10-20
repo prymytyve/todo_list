@@ -7,6 +7,7 @@ import {Project, projArr} from "./m_projects.js";
 const mainWrapper = document.querySelector('.mainWrapper')
 const mainBody = document.querySelector('#mainBody');
 const addTodo = document.querySelector('.addTodo')
+const addTodoDiv = document.querySelector('.addTodoDiv')
 const toolbar = document.querySelector('.toolbar')
 const toolbarText = document.querySelector('.toolbarText')
 
@@ -17,18 +18,19 @@ export function todoCreator(){
         if(todosInInputMode.length !== 0)return;
         const todo = new Todo();
         const todoDiv = document.createElement('div')
-        todoDiv.classList.add(`${todo.id}`, 'todoDiv')
+        todoDiv.classList.add('todoDiv')
         todoDiv.setAttribute('data', `${todo.id}`)
         todoDiv.appendChild(todo.inputMode('generate'))
         mainBody.appendChild(todoDiv)
-    })   
-
-    const b = document.createElement('button');
-    b.textContent = 'check'
-    b.addEventListener('click', () => {
-        console.log(todoArr)
     })
-    mainWrapper.append(b)
+    
+    //testing 
+    // const b = document.createElement('button');
+    // b.textContent = 'check'
+    // b.addEventListener('click', () => {
+    //     console.log(todoArr)
+    // })
+    // mainWrapper.append(b)
 }
 
 //function below gets current date
@@ -44,7 +46,7 @@ function filterTodo(theseTodos){
     mainBody.replaceChildren()        
     theseTodos.forEach((todo => {
         const todoDiv = document.createElement('div')
-        todoDiv.classList.add(`${todo.id}`, 'todoDiv')
+        todoDiv.classList.add('todoDiv')
         todoDiv.setAttribute('data', `${todo.id}`)
         todoDiv.appendChild(todo.printMode())
         mainBody.appendChild(todoDiv)
@@ -119,6 +121,7 @@ pastDue.addEventListener('click', e =>{
 ///////controls custom projects////////////////////////
 const projectsDiv = document.querySelector('.projects')
 const projBtn = document.querySelector('.projBtn')
+const projBtnDiv = document.querySelector('.projBtnDiv')
 
 projBtn.addEventListener('click', e =>{
     addProjEvent(e)
@@ -136,15 +139,7 @@ function addProj(a){
         e.preventDefault()
         toolbar.setAttribute('data', project.projectName )
         toolbarText.textContent = toolbar.getAttribute('data')
-        mainBody.replaceChildren()
-        const projectTodos = todoArr.filter(todo => todo.project === project.projectName);
-        projectTodos.forEach(todo =>{
-            const todoDiv = document.createElement('div')
-            todoDiv.classList.add(`${todo.id}`, 'todoDiv')
-            todoDiv.setAttribute('data', `${todo.id}`)
-            todoDiv.appendChild(todo.printMode())
-            mainBody.appendChild(todoDiv)
-        })
+        tabFunction()
     })
     const delProjBtn = document.createElement('button')
     delProjBtn.classList.add('.delProj')
@@ -154,7 +149,7 @@ function addProj(a){
     })
     projDiv.appendChild(proj)
     projDiv.appendChild(delProjBtn)
-    projectsDiv.insertBefore(projDiv, projBtn)
+    projectsDiv.insertBefore(projDiv, projBtnDiv)
 }
 
 //below is used to open dialog for creating projects
@@ -281,8 +276,7 @@ confirmDel.addEventListener('click', e=>{
         }
     })
     toolbar.replaceChild(multiDelDiv, deleteDiv)
-    const selAll = document.querySelector('.selAll')
-    tabFunction()
+    resetStuff()
 })
 deleteDiv.appendChild(confirmDel);
 
@@ -358,16 +352,15 @@ const sortPriority = () =>{
     tabFunction()         
 }
 
-const b = () =>{
-    console.log('hi')
-}
+const dummyFunc = () =>{}; // does nothing
+
+
 
 const sortOptions = [
-    {opt: '', func: b },
+    {opt: '', func: dummyFunc },
     {opt:'Due date', func: sortDueDate}, 
     {opt:'Priority', func: sortPriority}
 ]
-
 
 
 sortOptions.forEach(sortOpt =>{

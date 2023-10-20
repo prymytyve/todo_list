@@ -214,8 +214,8 @@ export default Todo.prototype.inputMode = function(a){
             this.project = projSelect.value;
             this.subList = tempArr.filter(i => i.subTask !='');       
             this.add()
-            console.log(this)
-            const thisTodoDiv = document.querySelector(`.${this.id}`)
+            // console.log(this)
+            const thisTodoDiv = document.querySelector(`[data=${this.id}]`)
             thisTodoDiv.replaceChildren(this.printMode())
             const toolbar = document.querySelector('.toolbar')
             const data = toolbar.getAttribute('data')
@@ -228,7 +228,7 @@ export default Todo.prototype.inputMode = function(a){
         cancel.textContent = 'Cancel';
         cancel.addEventListener('click', e =>{
             e.preventDefault()
-            const thisTodoDiv = document.querySelector(`.${this.id}`)
+            const thisTodoDiv = document.querySelector(`[data=${this.id}]`)
             mainBody.removeChild(thisTodoDiv)
         })
         todo.appendChild(cancel)
@@ -247,7 +247,7 @@ export default Todo.prototype.inputMode = function(a){
             this.project = projSelect.value;
             const filteredSubList = tempArr2.filter(i => i.subTask !=''); 
             this.subList = filteredSubList;
-            const thisTodoDiv = document.querySelector(`.${this.id}`)
+            const thisTodoDiv = document.querySelector(`[data=${this.id}]`)
             thisTodoDiv.replaceChildren(this.printMode())
             tabFunction()
         })
@@ -259,7 +259,7 @@ export default Todo.prototype.inputMode = function(a){
         cancel.textContent = 'Cancel';
         cancel.addEventListener('click', e =>{
             e.preventDefault()
-            const thisTodoDiv = document.querySelector(`.${this.id}`)
+            const thisTodoDiv = document.querySelector(`[data=${this.id}]`)
             thisTodoDiv.replaceChildren(this.printMode())
         })
         todo.appendChild(cancel)
@@ -272,7 +272,7 @@ export default Todo.prototype.inputMode = function(a){
         delBtn.addEventListener('click', (e) => {
             e.preventDefault()
             this.delete()
-            const thisTodoDiv = document.querySelector(`.${this.id}`)
+            const thisTodoDiv = document.querySelector(`[data=${this.id}]`)
             mainBody.removeChild(thisTodoDiv)
         })
         editBox.appendChild(delBtn)

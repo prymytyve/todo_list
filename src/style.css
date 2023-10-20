@@ -7,11 +7,9 @@ li{
     margin: 0px;
 }
 
-
-
 body{
     display:grid;
-    grid-template-columns: 1fr 4fr;
+    grid-template-columns: 1fr 7fr;
 }
 
 
@@ -19,7 +17,23 @@ nav{
     background-color: red;
     height:100vh;
     display: grid;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 1fr 4fr;
+}
+
+.mainNav,
+.projects{
+    display:grid;
+    justify-items: center;
+}
+
+.projects{
+    grid-auto-rows: 20px;
+}
+
+.projects .project{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
 }
 
 .toolbar{
@@ -43,6 +57,11 @@ nav{
     ". a5 a5 ."
     ". a4 a4 .";
 }
+
+/* .completed{
+
+} */
+
 
 .creating{
     background-color: yellow;

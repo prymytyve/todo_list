@@ -18,7 +18,7 @@ export default Todo.prototype.printMode = function(){
     if(this.completed === true) completeTodo.setAttribute('checked', 'checked')
     completeTodo.addEventListener('change', e => {
         this.completed = completeTodo.checked
-        if(completeTodo.checked === true) todo2.classList.toggle('completed')        
+        completeTodo.checked?todo2.classList.add('completed'):todo2.classList.remove('completed') 
     })
     completeDiv.appendChild(completeTodo)
 
@@ -94,7 +94,7 @@ export default Todo.prototype.printMode = function(){
     editBtn.textContent = 'Edit'
     editBtn.addEventListener('click', (e) => {
         e.preventDefault()
-        const thisTodoDiv = document.querySelector(`.${this.id}`)
+        const thisTodoDiv = document.querySelector(`[data=${this.id}]`)
         thisTodoDiv.replaceChildren(this.inputMode())
     })
     
