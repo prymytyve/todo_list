@@ -92,6 +92,33 @@ class Todo {
         const b = a.getTime()
         return b
     }
+
+    form2 = () =>{
+        if(this.unDueDate!=''){
+            const a = new Date(this.unDueDate)
+            const b = a.getTime()
+            return b
+        } else{
+            const b = Infinity;
+            return b
+        }
+    }
+
+    priorityVal = () =>{
+        const a = this._priority;
+        if(a === 'Urgent'){
+            return 4
+        } else if (a === 'High') { 
+            return 3
+        } else if (a==='Medium') { 
+            return 2
+        } else if (a==='Low') { 
+            return 1
+        } else{ 
+            return 0
+        }
+    }
+
 }
 
 

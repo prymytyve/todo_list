@@ -263,6 +263,7 @@ function projDelForm(a, projDiv){
 
 
 //todo delete functionality of toolbar
+const multiDelDiv = document.querySelector('.multiDelDiv')
 const deleteDiv = document.createElement('div');
 deleteDiv.classList.add('deleteDiv')
 
@@ -279,7 +280,7 @@ confirmDel.addEventListener('click', e=>{
             thisTodo.delete()
         }
     })
-    toolbar.replaceChild(multiDel, deleteDiv)
+    toolbar.replaceChild(multiDelDiv, deleteDiv)
     const selAll = document.querySelector('.selAll')
     tabFunction()
 })
@@ -301,7 +302,7 @@ const cancel = document.createElement('button');
 cancel.classList.add('cancelDel');
 cancel.textContent = 'Cancel';
 cancel.addEventListener('click', e =>{
-    toolbar.replaceChild(multiDel,deleteDiv)
+    toolbar.replaceChild(multiDelDiv,deleteDiv)
     resetStuff()
 })
 deleteDiv.appendChild(cancel)
@@ -323,7 +324,7 @@ multiDel.addEventListener('click', e=>{
         // })       
        div.replaceChildren(marked);
     })
-    toolbar.replaceChild(deleteDiv, multiDel)  
+    toolbar.replaceChild(deleteDiv, multiDelDiv)  
 })
 
 
@@ -340,3 +341,42 @@ function resetStuff(){
     tabFunction()
     inputState(false)
 }
+
+//sorting
+const sort = document.getElementById('sort')
+
+
+
+
+const sortDueDate = () =>{    
+    const sorted = todoArr.sort((a,b) => a.form2() < b.form2()? -1 : 1);
+    tabFunction()    
+}
+
+const sortPriority = () =>{
+    const sorted = todoArr.sort((a,b) => a.priorityVal() > b.priorityVal()? -1 : 1);
+    tabFunction()         
+}
+
+const b = () =>{
+    console.log('hi')
+}
+
+const sortOptions = [
+    {opt: '', func: b },
+    {opt:'Due date', func: sortDueDate}, 
+    {opt:'Priority', func: sortPriority}
+]
+
+
+
+sortOptions.forEach(sortOpt =>{
+    const option = document.createElement('option');
+    option.textContent = sortOpt.opt;
+    sort.appendChild(option)
+})
+
+sort.addEventListener('change', e=>{
+    const sortObj = sortOptions.find(x => x.opt === sort.value)
+    sortObj.func()
+})
