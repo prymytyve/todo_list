@@ -8,17 +8,19 @@ const mainWrapper = document.querySelector('.mainWrapper')
 const mainBody = document.querySelector('#mainBody');
 const addTodo = document.querySelector('.addTodo')
 const toolbar = document.querySelector('.toolbar')
+const toolbarText = document.querySelector('.toolbarText')
 
 export function todoCreator(){    
     //creates 
     addTodo.addEventListener('click', () =>{
+        const todosInInputMode = document.querySelectorAll('.inputMode')
+        if(todosInInputMode.length !== 0)return;
         const todo = new Todo();
         const todoDiv = document.createElement('div')
         todoDiv.classList.add(`${todo.id}`, 'todoDiv')
         todoDiv.setAttribute('data', `${todo.id}`)
         todoDiv.appendChild(todo.inputMode('generate'))
         mainBody.appendChild(todoDiv)
-
     })   
 
     const b = document.createElement('button');
@@ -28,13 +30,6 @@ export function todoCreator(){
     })
     mainWrapper.append(b)
 }
-
-//disables addToDo button if any todo is in inputMode
-mainWrapper.addEventListener('click', e =>{
-    const todosInInputMode = document.querySelectorAll('.inputMode')
-    todosInInputMode.length === 0? addTodo.disabled = false: addTodo.disabled = true;    
-})
-
 
 //function below gets current date
 function todaysDate(){
@@ -50,6 +45,7 @@ function filterTodo(theseTodos){
     theseTodos.forEach((todo => {
         const todoDiv = document.createElement('div')
         todoDiv.classList.add(`${todo.id}`, 'todoDiv')
+        todoDiv.setAttribute('data', `${todo.id}`)
         todoDiv.appendChild(todo.printMode())
         mainBody.appendChild(todoDiv)
     }))
@@ -81,7 +77,7 @@ export const tabFunction = () =>{
 //displays all active todos
 function resetPage(){
     toolbar.setAttribute('data', 'all')
-    toolbar.textContent = 'All';
+    toolbarText.textContent = 'All';
     tabFunction()
 }
 
@@ -96,7 +92,7 @@ all.addEventListener('click', e => {
 const today = document.querySelector('.today')
 today.addEventListener('click', e =>{
     toolbar.setAttribute('data', 'today')
-    toolbar.textContent = 'Today';
+    toolbarText.textContent = 'Today';
     tabFunction()
 })
 
@@ -106,7 +102,7 @@ today.addEventListener('click', e =>{
 const completed = document.querySelector('.completed')
 completed.addEventListener('click', e =>{
     toolbar.setAttribute('data', 'completed')
-    toolbar.textContent = 'Completed';
+    toolbarText.textContent = 'Completed';
     tabFunction()
 })
 
@@ -114,7 +110,7 @@ completed.addEventListener('click', e =>{
 const pastDue = document.querySelector('.pastDue')
 pastDue.addEventListener('click', e =>{
     toolbar.setAttribute('data', 'pastDue')
-    toolbar.textContent = 'Past due';
+    toolbarText.textContent = 'Past due';
     tabFunction()
 })
 
@@ -139,17 +135,17 @@ function addProj(a){
     proj.addEventListener('click', e =>{
         e.preventDefault()
         toolbar.setAttribute('data', project.projectName )
-        toolbar.textContent = toolbar.getAttribute('data')
+        toolbarText.textContent = toolbar.getAttribute('data')
         mainBody.replaceChildren()
         const projectTodos = todoArr.filter(todo => todo.project === project.projectName);
         projectTodos.forEach(todo =>{
             const todoDiv = document.createElement('div')
             todoDiv.classList.add(`${todo.id}`, 'todoDiv')
+            todoDiv.setAttribute('data', `${todo.id}`)
             todoDiv.appendChild(todo.printMode())
             mainBody.appendChild(todoDiv)
         })
     })
-
     const delProjBtn = document.createElement('button')
     delProjBtn.classList.add('.delProj')
     delProjBtn.textContent = 'X';
@@ -264,3 +260,83 @@ function projDelForm(a, projDiv){
     // 
 }
 
+
+
+//todo delete functionality of toolbar
+const deleteDiv = document.createElement('div');
+deleteDiv.classList.add('deleteDiv')
+
+const confirmDel = document.createElement('button')
+confirmDel.classList.add('confirmDel')
+confirmDel.textContent = 'Confirm';
+confirmDel.addEventListener('click', e=>{
+    e.preventDefault()
+    const marked= document.querySelectorAll('.markedforDel')
+    marked.forEach(i =>{
+        if(i.checked){
+            const thisTodoId = i.parentElement.parentElement.parentElement.getAttribute('data');
+            const thisTodo = todoArr.find(i => i.id === thisTodoId)
+            thisTodo.delete()
+        }
+    })
+    toolbar.replaceChild(multiDel, deleteDiv)
+    const selAll = document.querySelector('.selAll')
+    tabFunction()
+})
+deleteDiv.appendChild(confirmDel);
+
+
+//select all checkboxes
+const selAll = document.createElement('button') 
+selAll.classList.add('selAll')
+selAll.textContent = 'Select all'
+selAll.addEventListener('click', e=>{
+    const allBoxes = document.querySelectorAll('.markedforDel')
+    allBoxes.forEach(check => check.checked=true)
+})
+deleteDiv.appendChild(selAll)
+
+//cancel
+const cancel = document.createElement('button');
+cancel.classList.add('cancelDel');
+cancel.textContent = 'Cancel';
+cancel.addEventListener('click', e =>{
+    toolbar.replaceChild(multiDel,deleteDiv)
+    resetStuff()
+})
+deleteDiv.appendChild(cancel)
+
+
+
+//replaces all todos complete checkboxes with checkboxes that mark it for deletion
+const multiDel = document.querySelector('.multiDelete')
+multiDel.addEventListener('click', e=>{
+    e.preventDefault()
+    tabFunction()   
+    inputState(true)
+    const completeDivs= document.querySelectorAll('.completeDiv')
+    completeDivs.forEach(div =>{
+        const marked = document.createElement('input');
+        marked.setAttribute('type', 'checkbox');
+        marked.classList.add('markedforDel');
+        // marked.addEventListener('change', e=>{            
+        // })       
+       div.replaceChildren(marked);
+    })
+    toolbar.replaceChild(deleteDiv, multiDel)  
+})
+
+
+function inputState(a){
+    const navOptions = document.querySelectorAll('.navOptions')
+    navOptions.forEach(nav => nav.disabled = a)
+    projBtn.disabled = a;    
+    addTodo.disabled = a;
+    const editBtns = document.querySelectorAll('.editBtn');
+    editBtns.forEach(e => e.disabled = a)
+}
+
+function resetStuff(){
+    tabFunction()
+    inputState(false)
+}
