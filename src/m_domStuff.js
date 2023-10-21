@@ -25,13 +25,13 @@ export function todoCreator(){
         mainBody.appendChild(todoDiv)
     })
     
-    //testing 
-    // const b = document.createElement('button');
-    // b.textContent = 'check'
-    // b.addEventListener('click', () => {
-    //     console.log(todoArr)
-    // })
-    // mainWrapper.append(b)
+    // testing 
+    const b = document.createElement('button');
+    b.textContent = 'check'
+    b.addEventListener('click', () => {
+        console.log(todoArr)
+    })
+    mainWrapper.append(b)
 }
 
 //function below gets current date

@@ -122,7 +122,8 @@ export default Todo.prototype.inputMode = function(a){
         addSub.disabled = true;
         finBtn.disabled = true;
         submitBtn.disabled = true;
-        e.preventDefault()        
+        e.preventDefault()
+        if(a==null)console.log(tempArr2)        
         
         //creates subItems dom elements
         const li = document.createElement('li');
@@ -144,7 +145,7 @@ export default Todo.prototype.inputMode = function(a){
         trashImg.src = trash;
         trashImg.addEventListener('click', e => {
             subContainer.removeChild(li)
-            subItem.delete(this.subList)
+            subItem.delete(tempArr)
             if (addSub.disabled === true) addSub.disabled = false;
         })  
         li.appendChild(input)
@@ -164,6 +165,7 @@ export default Todo.prototype.inputMode = function(a){
         task.value.length === 0? finBtn.disabled = true: finBtn.disabled = false;
     })
 
+    
     //When returning to inputMode, below will set existing subItems as values for inputs
     const tempArr2 = [] //creates an array that becomes mew subList when clicking done instead
     if(this.subList.length !== 0){
@@ -173,6 +175,12 @@ export default Todo.prototype.inputMode = function(a){
             li.classList.add('subTask')
             const input = document.createElement('input');
             input.setAttribute('value', i.subTask)
+            i.type = o.type;
+            if (o.completed === true){ 
+                i.completed = o.completed;
+                input.disabled = true; 
+            }
+
             input.addEventListener('keyup', e => {
                 i.subTask = input.value
                 input.value.length === 0? addSub.disabled = true: addSub.disabled = false; //disables addTask button if input is empty     
@@ -185,8 +193,8 @@ export default Todo.prototype.inputMode = function(a){
             trashImg.src = trash;
             trashImg.addEventListener('click', e => {
                 subContainer.removeChild(li)
-                const deleteMe = this.subList.indexOf(i)
-                this.subList.splice(i,1)
+                const deleteMe = tempArr2.indexOf(i)
+                tempArr2.splice(i,1)
                 if (addSub.disabled === true) addSub.disabled = false;
             })  
             li.appendChild(input)
@@ -196,7 +204,10 @@ export default Todo.prototype.inputMode = function(a){
             //toggles between note and task. Note = unchecked
             const togSub = document.createElement('input');
             togSub.setAttribute('type', 'checkbox')
-            if(o.type === 'task') togSub.setAttribute('checked','checked')
+            if(o.type === 'task') togSub.setAttribute('checked','checked');
+            // if (o.completed === true){
+            //     togSub.disabled = true;
+            // }   
             togSub.addEventListener('change', e => i.type = togSub.checked)
             li.insertBefore(togSub,input)        
         })    
@@ -210,8 +221,7 @@ export default Todo.prototype.inputMode = function(a){
         submitBtn.classList.add('submitTodo', 'modeBtn');
         submitBtn.textContent = 'Submit';
         submitBtn.addEventListener('click', e =>{
-            e.preventDefault()
-            
+            e.preventDefault()            
             this.task = task.value;
             this.priority = pSelect.value;
             this.unDueDate = dateInput.value;
@@ -241,7 +251,7 @@ export default Todo.prototype.inputMode = function(a){
     // set of buttons that load when switching from input mode 
     const editBtns =() =>{
         //finish editing todo
-        finBtn.classList.add('finBtn', 'modeBtn')
+        finBtn.classList.add('finBtn', 'modeBtn') //aka done button
         finBtn.textContent = 'Done'
         finBtn.addEventListener('click', (e) => {
             e.preventDefault()

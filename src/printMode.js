@@ -135,9 +135,11 @@ export default Todo.prototype.printMode = function(){
                 p.textContent = item.subTask
                 const togComplete = document.createElement('input');
                 togComplete.setAttribute('type', 'checkbox')
+                if(item.completed===true) togComplete.checked = true;
+                togComplete.checked === true?li.classList.add('completedSub'):li.classList.remove('completedSub')
                 togComplete.addEventListener('change', e =>{ 
                     item.completed = togComplete.checked
-                    if(togComplete.checked === true) li.classList.add('completedSub') 
+                    togComplete.checked === true?li.classList.add('completedSub'):li.classList.remove('completedSub') 
                 })
                 li.appendChild(p)
                 li.insertBefore(togComplete, p)                              

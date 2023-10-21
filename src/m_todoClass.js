@@ -136,6 +136,10 @@ class Sub{
         v.splice(i,1)
     }
 
+    get completed(){
+        return this._completed;
+    }
+    
     set completed(val){
         val === true? this._completed = true: this._completed = false;
     }   
@@ -153,7 +157,7 @@ class Sub{
     }
     
     set type(val){
-        val === true?this._type = 'task':this._type = 'note'
+        val === true||val=== 'task'?this._type = 'task':this._type = 'note'
     }
 }
 

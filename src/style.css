@@ -260,6 +260,10 @@ nav{
     font-size: 2rem;
 }
 
+.completedSub{
+    color:gray;
+}
+
 
 /* /////////////////////////////// */
 .addToDo{
