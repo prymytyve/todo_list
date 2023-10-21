@@ -78,9 +78,12 @@ export default Todo.prototype.printMode = function(){
     //view sublist
     const subListDisplay = document.createElement('button')
     subListDisplay.classList.add('subListDisplay', 'subBtn')
-    subListDisplay.textContent = 'Show sublist';
+    const a = 'Show sublist'
+    const b = 'Hide sublist'
+    subListDisplay.textContent = a;
     subListDisplay.addEventListener('click', e=>{
         e.preventDefault();
+        subListDisplay.textContent = subListDisplay.textContent===a?subListDisplay.textContent=b:subListDisplay.textContent=a;
         subContainer.classList.toggle('display')
     })
     if (this.subList.length > 0) editBox.appendChild(subListDisplay);
@@ -104,7 +107,9 @@ export default Todo.prototype.printMode = function(){
         if (this.subList.some(checkForNotes) === true){
             const noteSection = document.createElement('ul')
             noteSection.classList.add('subSection', 'noteSection')
-            noteSection.textContent = 'Notes';
+            const noteSectionT = document.createElement('span')
+            noteSectionT.textContent = 'Notes';
+            noteSection.appendChild(noteSectionT)
             const noteItems = this.subList.filter(item => item.type === 'note')
             noteItems.forEach(item => {
                 const li = document.createElement('li')
@@ -119,7 +124,9 @@ export default Todo.prototype.printMode = function(){
         if (this.subList.some(checkForSubTasks) === true){
             const taskSection = document.createElement('ul')
             taskSection.classList.add('subSection', 'subTaskSection')
-            taskSection.textContent = 'Subtasks';
+            const taskSectionT = document.createElement('span');
+            taskSectionT.textContent = 'Subtasks';
+            taskSection.appendChild(taskSectionT)
             const subItems =  this.subList.filter(item => item.type === 'task')
             subItems.forEach(item => {
                 const li = document.createElement('li')

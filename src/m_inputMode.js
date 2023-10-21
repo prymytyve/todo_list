@@ -155,7 +155,7 @@ export default Todo.prototype.inputMode = function(a){
         const togSub = document.createElement('input');
         togSub.setAttribute('type', 'checkbox')
         togSub.addEventListener('change', e => subItem.type = togSub.checked)
-        li.insertBefore(togSub,trashImg)
+        li.insertBefore(togSub,input)
     })
     editBox.appendChild(addSub)
 
@@ -167,8 +167,7 @@ export default Todo.prototype.inputMode = function(a){
     //When returning to inputMode, below will set existing subItems as values for inputs
     const tempArr2 = [] //creates an array that becomes mew subList when clicking done instead
     if(this.subList.length !== 0){
-        this.subList.forEach(o => {
-            
+        this.subList.forEach(o => {            
             const i = new Sub(o.subTask, tempArr2) //used to create new Subs from current subTasks
             const li = document.createElement('li');
             li.classList.add('subTask')
@@ -197,9 +196,9 @@ export default Todo.prototype.inputMode = function(a){
             //toggles between note and task. Note = unchecked
             const togSub = document.createElement('input');
             togSub.setAttribute('type', 'checkbox')
-            if(i.type === 'task') togSub.setAttribute('checked','checked')
+            if(o.type === 'task') togSub.setAttribute('checked','checked')
             togSub.addEventListener('change', e => i.type = togSub.checked)
-            li.insertBefore(togSub,trashImg)        
+            li.insertBefore(togSub,input)        
         })    
     }
 
