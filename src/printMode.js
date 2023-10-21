@@ -19,6 +19,7 @@ export default Todo.prototype.printMode = function(){
     completeTodo.addEventListener('change', e => {
         this.completed = completeTodo.checked
         completeTodo.checked?todo2.classList.add('completed'):todo2.classList.remove('completed') 
+        todoCompleteForm(completeTodo.checked)
     })
     completeDiv.appendChild(completeTodo)
 
@@ -163,3 +164,11 @@ export default Todo.prototype.printMode = function(){
 
 const checkForNotes = e => e.type === 'note'
 const checkForSubTasks = e => e.type === 'task'
+
+
+function todoCompleteForm(val){
+    const editBtn = document.querySelector('.editBtn')
+    editBtn.disabled = val;
+    const checkBoxes = document.querySelectorAll('.subTask > input[type="checkbox"');
+    checkBoxes.forEach(checkBox => checkBox.disabled = val);
+}
