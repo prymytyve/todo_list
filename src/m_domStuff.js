@@ -3,6 +3,7 @@ import m_inputMode from "./m_inputMode.js";
 import printMode from "./printMode.js";
 import format from "date-fns/format";
 import {Project, projArr} from "./m_projects.js";
+import trash from './img/delete.svg'
 
 const mainWrapper = document.querySelector('.mainWrapper')
 const mainBody = document.querySelector('#mainBody');
@@ -141,14 +142,14 @@ function addProj(a){
         toolbarText.textContent = toolbar.getAttribute('data')
         tabFunction()
     })
-    const delProjBtn = document.createElement('button')
-    delProjBtn.classList.add('.delProj')
-    delProjBtn.textContent = 'X';
-    delProjBtn.addEventListener('click', e =>{
+    const trashImg = new Image();
+    trashImg.classList.add('delBtn')
+    trashImg.src = trash;
+    trashImg.addEventListener('click', e =>{
         projDelForm(project, projDiv)
     })
     projDiv.appendChild(proj)
-    projDiv.appendChild(delProjBtn)
+    projDiv.appendChild(trashImg)
     projectsDiv.insertBefore(projDiv, projBtnDiv)
 }
 
@@ -322,7 +323,7 @@ multiDel.addEventListener('click', e=>{
 })
 
 
-function inputState(a){
+function inputState(a){ //used to enable/disable inputs on page
     const navOptions = document.querySelectorAll('.navOptions')
     navOptions.forEach(nav => nav.disabled = a)
     projBtn.disabled = a;    
@@ -331,16 +332,13 @@ function inputState(a){
     editBtns.forEach(e => e.disabled = a)
 }
 
-function resetStuff(){
+function resetStuff(){ //used to reset most content on page
     tabFunction()
     inputState(false)
 }
 
 //sorting
 const sort = document.getElementById('sort')
-
-
-
 
 const sortDueDate = () =>{    
     const sorted = todoArr.sort((a,b) => a.form2() < b.form2()? -1 : 1);

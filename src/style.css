@@ -1,3 +1,4 @@
+
 body,
 div,
 ul,
@@ -12,7 +13,24 @@ body{
     grid-template-columns: 1fr 7fr;
 }
 
+p{
+    display: inline-block;
+    margin: 0px;
+    padding: 0px;
+}
 
+.hidden{
+    display:none;
+}
+
+.display{
+    display:block;
+}
+
+
+
+/* /////////////////////////////////////////////////////////// */
+/* nav stuff */
 nav{
     background-color: red;
     height:100vh;
@@ -36,11 +54,21 @@ nav{
     justify-content: space-between;
 }
 
+
+/* ///////////////////////////////////////////////////////////////// */
+/* toolbar stuff */
+
 .toolbar{
     height: 5%;
     background-color: aquamarine;
     display: flex;
     justify-content: space-evenly;
+}
+
+/* //////////////////////////////////////////////////////////////// */
+/* Todos */
+.creating{
+    background-color: yellow;
 }
 
 .todo{
@@ -49,7 +77,6 @@ nav{
     width: 500px;
     margin:5px;
     border: 1px solid black;
-    padding: 5px 3px;
     grid-template-areas: 
     "a6 a1 a7 ."
     "a6 a2 a2 ."
@@ -58,13 +85,8 @@ nav{
     ". a4 a4 .";
 }
 
-/* .completed{
-
-} */
-
-
-.creating{
-    background-color: yellow;
+.todo > * {
+    margin: 2px 0px 2px;
 }
 
 .projectDiv{
@@ -74,6 +96,7 @@ nav{
 .editBtn,
 .cancelTodo{
     grid-area: a7;
+    justify-self: right;
 }
 
 .task{
@@ -85,7 +108,7 @@ nav{
     display: grid;
     grid-template-columns: 1fr 2fr;
     /* justify-content: space-evenly; */
-    margin: 5px 0px;
+    /* margin: 5px 0px; */
 }
 
 .editBox{
@@ -93,13 +116,77 @@ nav{
     display: flex;
     justify-content: space-between;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-areas: "b1 b2 . b3";
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas: "b1 b2";
 }
 
-.todo button{
-    width:70px;
-    font-size: 0.6rem
+.subContainer{
+    grid-area: a5;
+    padding-left: 30px;
+    font-size: 0.8rem;
+}
+
+.inputMode > .subContainer{
+    /* margin-top: 2.5px;
+    padding-top: 2.5px;
+    border-top: solid black 3px; */
+}
+
+.printMode > .subContainer{
+    margin-top: 20px;
+    border-top: black solid 5px;
+    padding-top: 5px;
+}
+
+.subContainer input{
+    height: 0.85rem;
+}
+
+.subContainer > .noteSection > li{
+    list-style-type: none;
+    /* list-style-image: url(./img/star-box.svg); */
+}
+
+.noteSection li::before{
+   content: '';
+   background-image: url(./img/star-box.svg);
+   background-size: 100% 100%;
+   display: inline-block;
+   height: 0.85rem;
+   width: 0.9rem;
+}
+
+.subTaskSection input,
+.noteSection li::before{
+    margin-left: 0px;
+    margin-right: 5px;
+    vertical-align: center;
+}
+
+.subSection 
+
+
+.completeDiv{
+    grid-area: a6;
+    display: grid;
+    align-items: center;
+}
+
+.completeDiv > .delBtn{
+    height: 1.25rem;
+    width: 1.25rem;
+    justify-self: center;
+    /* align-self: ; */
+}
+
+.subContainer > .subTask{
+    display: flex;
+    font-size: 0.8rem; 
+}
+
+.subTask > .delBtn{
+    height: 1rem;
+    width: 1rem;
 }
 
 .subBtn{
@@ -108,39 +195,27 @@ nav{
 
 .modeBtn{
     grid-area:b2;
+    justify-self: right;
 }
 
-.editBox > .delBtn{
-    grid-area: b3
+.todo button{
+    width:70px;
+    font-size: 0.6rem
+}
+
+.printMode > .projectDiv,
+.printMode  .dateDiv,
+.printMode  .priorityDiv{
+    font-size: 0.8rem;
+}
+
+.printMode > .task{
+    font-size: 2rem;
 }
 
 
-.subContainer {
-    grid-area: a5;
-
-}
-
-.completeDiv{
-    grid-area: a6;
-    display: grid;
-    align-items: center;
-}
-
-
-p{
-    display: inline-block;
-    margin: 0px;
-    padding: 0px;
-}
-
+/* /////////////////////////////// */
 .addToDo{
     position: absolute;
 }
 
-.hidden{
-    display:none;
-}
-
-.display{
-    display:block;
-}

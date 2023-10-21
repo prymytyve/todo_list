@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import {Project, projArr } from "./m_projects.js";
 import printMode from "./printMode.js";
 import { addProjEvent, tabFunction } from "./m_domStuff.js";
+import trash from './img/delete.svg'
 
 
 export default Todo.prototype.inputMode = function(a){
@@ -19,6 +20,8 @@ export default Todo.prototype.inputMode = function(a){
     editBox.classList.add('editBox');
     const subContainer = document.createElement('ul');
     subContainer.classList.add('subContainer');
+    const completeDiv = document.createElement('div')
+    completeDiv.classList.add('completeDiv')
 
 
     ///////////////////////////////////
@@ -136,22 +139,23 @@ export default Todo.prototype.inputMode = function(a){
         }) 
 
         //delete subitem
-        const deleteSub = document.createElement('button');
-        deleteSub.textContent = 'X';       
-        deleteSub.addEventListener('click', e => {
+        const trashImg = new Image();
+        trashImg.classList.add('delBtn')
+        trashImg.src = trash;
+        trashImg.addEventListener('click', e => {
             subContainer.removeChild(li)
             subItem.delete(this.subList)
             if (addSub.disabled === true) addSub.disabled = false;
         })  
         li.appendChild(input)
-        li.appendChild(deleteSub)
+        li.appendChild(trashImg)
         subContainer.appendChild(li)
     
         //toggles between note and task. Note = unchecked
         const togSub = document.createElement('input');
         togSub.setAttribute('type', 'checkbox')
         togSub.addEventListener('change', e => subItem.type = togSub.checked)
-        li.insertBefore(togSub,deleteSub)
+        li.insertBefore(togSub,trashImg)
     })
     editBox.appendChild(addSub)
 
@@ -177,16 +181,17 @@ export default Todo.prototype.inputMode = function(a){
             }) 
             
             //deletes subList item
-            const deleteSub = document.createElement('button');
-            deleteSub.textContent = 'X';       
-            deleteSub.addEventListener('click', e => {
+            const trashImg = new Image();
+            trashImg.classList.add('delBtn')
+            trashImg.src = trash;
+            trashImg.addEventListener('click', e => {
                 subContainer.removeChild(li)
                 const deleteMe = this.subList.indexOf(i)
                 this.subList.splice(i,1)
                 if (addSub.disabled === true) addSub.disabled = false;
             })  
             li.appendChild(input)
-            li.appendChild(deleteSub)
+            li.appendChild(trashImg)
             subContainer.appendChild(li)
         
             //toggles between note and task. Note = unchecked
@@ -194,7 +199,7 @@ export default Todo.prototype.inputMode = function(a){
             togSub.setAttribute('type', 'checkbox')
             if(i.type === 'task') togSub.setAttribute('checked','checked')
             togSub.addEventListener('change', e => i.type = togSub.checked)
-            li.insertBefore(togSub,deleteSub)        
+            li.insertBefore(togSub,trashImg)        
         })    
     }
 
@@ -265,23 +270,24 @@ export default Todo.prototype.inputMode = function(a){
         todo.appendChild(cancel)
 
     
-        //delete todo button
-        const delBtn = document.createElement('button');
-        delBtn.classList.add('delBtn')
-        delBtn.textContent = 'Delete';
-        delBtn.addEventListener('click', (e) => {
+        //delete todo button       
+        const trashImg = new Image();
+        trashImg.classList.add('delBtn')
+        trashImg.src = trash;
+        trashImg.addEventListener('click', (e) => {
             e.preventDefault()
             this.delete()
             const thisTodoDiv = document.querySelector(`[data=${this.id}]`)
             mainBody.removeChild(thisTodoDiv)
         })
-        editBox.appendChild(delBtn)
+        completeDiv.appendChild(trashImg)
     }
     
     a!=null?creationBtns():editBtns();
     
     //////////////////////////////////////////////////////////////////////
     //appends main parts of todo/////////////////////////////////////////
+    todo.appendChild(completeDiv)
     todo.appendChild(projectDiv)
     todo.appendChild(task)
     todo.appendChild(main)
