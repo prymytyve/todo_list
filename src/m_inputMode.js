@@ -9,7 +9,7 @@ import trash from './img/delete.svg'
 export default Todo.prototype.inputMode = function(a){
     const todo = document.createElement('form'); 
     todo.classList.add('todo', 'inputMode')
-    if(a!=null)todo.classList.add('creating')   
+    a!=null?todo.classList.add('creating'):todo.classList.add('editing')   
     const main = document.createElement('ul');
     main.classList.add('main')
     const finBtn = document.createElement('button');
@@ -205,9 +205,6 @@ export default Todo.prototype.inputMode = function(a){
             const togSub = document.createElement('input');
             togSub.setAttribute('type', 'checkbox')
             if(o.type === 'task') togSub.setAttribute('checked','checked');
-            // if (o.completed === true){
-            //     togSub.disabled = true;
-            // }   
             togSub.addEventListener('change', e => i.type = togSub.checked)
             li.insertBefore(togSub,input)        
         })    

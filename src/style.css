@@ -77,15 +77,42 @@ nav{
 /* //////////////////////////////////////////////////////////////// */
 /* Todos */
 .todoDiv{
-    width: 420px;
+    width: fit-content;
     margin: 3px 5px 3px 5px;
 }
 
 .todo{
     display:grid;
     place-content: center;
-    grid-template-columns: 0.5fr 2fr 2fr 0.1fr;
-    width: 420px;
+    border: 1px solid black;
+}
+
+.todo > * {
+    margin: 2px 0px 2px;
+}
+
+.todoDiv .creating{
+    background-color: yellow;
+    width: 360px;
+    /* padding: 4px; */
+    grid-template-columns: 0.1fr 1.49fr 1.49fr 0.1fr;   
+    grid-template-areas: 
+    ". a1 a7 ."
+    ". a2 a2 ."
+    ". a3 a3 ."
+    ". a5 a5 ."
+    ". a4 a4 .";
+}
+
+.todoDiv .creating .completeDiv{
+    display:none
+}
+
+
+.todoDiv .editing,
+.todoDiv .printMode{
+    width: 400px;
+    grid-template-columns: 50px 170px 170px 10px;
     border: 1px solid black;
     box-sizing: border-box;
     padding-top: 4px;
@@ -99,14 +126,6 @@ nav{
     ". a4 a4 .";
 }
 
-.todo > * {
-    margin: 2px 0px 2px;
-}
-
-.creating{
-    background-color: yellow;
-}
-
 .todo .projectDiv,
 .todo  .dateDiv,
 .todo  .priorityDiv{
@@ -114,14 +133,17 @@ nav{
 }
 
 .inputMode select,
-.inputMode input{
-    /* height:  0.8rem; */
+.inputMode input[type='datetime-local']{  
     font-size: 0.75rem;
 }
 
+.inputMode input[type='datetime-local']{
+    height:0.8rem;
+}
 
 .projectDiv{
     grid-area: a1;
+    padding-top: 2px;
 }
 
 .editBtn,
@@ -133,7 +155,7 @@ nav{
 
 .task{
     grid-area: a2;
-    width: 330px;
+    width: 320px;
 }
 
 .main{
@@ -218,6 +240,7 @@ nav{
     justify-items:center;
     height:20px;
     margin-right: 5px;
+    width: 50px;
 }
 
 .completeDiv > img{
