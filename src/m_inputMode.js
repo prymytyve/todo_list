@@ -34,6 +34,22 @@ export default Todo.prototype.inputMode = function(a){
         task.value.length === 0?submitBtn.disabled = true: submitBtn.disabled = false;
     }) 
     
+    ////////////////////////////////////////////////////////////////////////////////////
+    //duedate and time/////////////////////////////////////////////////////////////////
+    const dateDiv= document.createElement('div');
+    dateDiv.classList.add('dateDiv')   
+    const dSpan = document.createElement('span')
+    dSpan.textContent = 'Due: '; 
+    const dateInput= document.createElement('input');
+    dateInput.classList.add('dateInput')
+    dateInput.setAttribute('type', 'datetime-local')
+    dateInput.setAttribute('value', this.unDueDate )
+ 
+    dateDiv.appendChild(dSpan)
+    dateDiv.appendChild(dateInput)
+    main.appendChild(dateDiv)
+
+    
     //////////////////////////////////
     //priority selection////////////// 
     const priorityDiv = document.createElement('div');
@@ -57,21 +73,6 @@ export default Todo.prototype.inputMode = function(a){
         pSelect.appendChild(option)
     }
     main.appendChild(priorityDiv)
-    
-    ////////////////////////////////////////////////////////////////////////////////////
-    //duedate and time/////////////////////////////////////////////////////////////////
-    const dateDiv= document.createElement('div');
-    dateDiv.classList.add('dateDiv')   
-    const dSpan = document.createElement('span')
-    dSpan.textContent = 'Due: '; 
-    const dateInput= document.createElement('input');
-    dateInput.classList.add('dateInput')
-    dateInput.setAttribute('type', 'datetime-local')
-    dateInput.setAttribute('value', this.unDueDate )
- 
-    dateDiv.appendChild(dSpan)
-    dateDiv.appendChild(dateInput)
-    main.appendChild(dateDiv)
 
     ////////////////////////////////////////////////////////////////////////////////////
     //projects//////////////////////////////////////////////////////////////////////////
