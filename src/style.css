@@ -311,6 +311,10 @@ nav{
     background-color: rgb(218, 218, 218);
 }
 
+.todoDiv .pastDue{
+    background-color: pink;
+}
+
 /* /////////////////////////////// */
 .addToDo{
     position: absolute;
@@ -318,7 +322,8 @@ nav{
 
 /*  */
 /* dialog{
-    margin:0px;
-    top:20vh;
-    left:45vw;   
+    margin: 0px;
+    top:20%;
+
 } */
+

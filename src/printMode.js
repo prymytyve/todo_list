@@ -5,7 +5,9 @@ import inputMode from "./m_inputMode.js";
 export default Todo.prototype.printMode = function(){
     const todo2 = document.createElement('div'); 
     todo2.classList.add('todo', 'printMode') 
-    if(this.completed===true)todo2.classList.add('completed')  
+    if(this.completed===true)todo2.classList.add('completed')
+    this.getPastDue()
+    if(this.completed!=true && this.pastDue === true) todo2.classList.add('pastDue')
     const main = document.createElement('ul');
     main.classList.add('main')
     const subContainer = document.createElement('ul');
@@ -20,6 +22,16 @@ export default Todo.prototype.printMode = function(){
         checkBoxes.forEach(checkBox => checkBox.disabled = val);
     }
 
+    function pastDueToComp(){
+        todo2.classList.add('completed')
+        todo2.classList.remove('pastDue')
+    }
+    function compToPastDue(a){
+        todo2.classList.remove('completed') 
+        a.getPastDue();
+        if(a.pastDue===true)todo2.classList.add('pastDue')
+    }
+
     const completeDiv = document.createElement('div')
     completeDiv.classList.add('completeDiv')
     const completeTodo = document.createElement('input')
@@ -27,8 +39,9 @@ export default Todo.prototype.printMode = function(){
     if(this.completed === true)completeTodo.setAttribute('checked', 'checked')
     completeTodo.addEventListener('change', e => {
         this.completed = completeTodo.checked
-        completeTodo.checked?todo2.classList.add('completed'):todo2.classList.remove('completed') 
+        completeTodo.checked?pastDueToComp():compToPastDue(this);
         todoCompleteForm(completeTodo.checked, this.id)
+        
     })
     completeDiv.appendChild(completeTodo)
 

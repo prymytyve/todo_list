@@ -16,7 +16,6 @@ class Todo {
     _completed = false
     _subList = []
     _id = 'id'+uuidv4()
-    
 
     get task(){
         return this._task;
@@ -117,6 +116,25 @@ class Todo {
         } else{ 
             return 0
         }
+    }
+
+    get pastDue(){
+        return this._pastDue;
+    }
+    set pastDue(val){
+        this._pastDue = val;
+    }
+
+    getPastDue = () =>{
+        const a = new Date(this.unDueDate);
+        const b = a.getTime();
+        
+        // get today's date
+        const c = new Date();        
+        c.setHours(0,0,0,0);
+        const d = c.getTime();
+
+        (b < d && this.completed!=true)?this.pastDue=true:this.pastDue=false;    
     }
 
 }

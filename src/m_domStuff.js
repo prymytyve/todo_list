@@ -54,8 +54,6 @@ function filterTodo(theseTodos){
     }))
 }
 
-
-
 //gets current data attribute of toolbar, and applies functions that will return a filtered array of todos
 export const tabFunction = () =>{
     const data = toolbar.getAttribute('data')
@@ -65,7 +63,10 @@ export const tabFunction = () =>{
     } else if(data==='today'){
         const theseTodos = todoArr.filter(todo => todo.form() === todaysDate() &&  todo.completed === false);
         filterTodo(theseTodos);
-    } else if(data==='completed'){
+    }else if(data==='upcoming'){
+        const theseTodos = todoArr.filter(todo => todo.form() > todaysDate() &&  todo.completed === false);
+        filterTodo(theseTodos);    
+    }else if(data==='completed'){
         const theseTodos = todoArr.filter(todo => todo.completed === true);
         filterTodo(theseTodos);
     } else if(data==='pastDue'){
@@ -99,6 +100,13 @@ today.addEventListener('click', e =>{
     tabFunction()
 })
 
+//only diplays upcoming todos
+const upcoming = document.querySelector('.upcoming')
+upcoming.addEventListener('click', e=>{
+    toolbar.setAttribute('data', 'upcoming')
+    toolbarText.textContent = 'Upcoming';
+    tabFunction()   
+})
 
 
 //displays completed todos
