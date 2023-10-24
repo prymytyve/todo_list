@@ -3,7 +3,10 @@ import { format } from "date-fns";
 import {Project, projArr } from "./m_projects.js";
 import printMode from "./printMode.js";
 import { addProjEvent, tabFunction } from "./m_domStuff.js";
-import trash from './img/delete.svg'
+import trash from './img/delete.svg';
+import note from './img/note.svg';
+import taskImg from './img/checkbox.svg';
+
 
 
 export default Todo.prototype.inputMode = function(a){
@@ -154,10 +157,11 @@ export default Todo.prototype.inputMode = function(a){
         subContainer.appendChild(li)
     
         //toggles between note and task. Note = unchecked
-        const togSub = document.createElement('input');
-        togSub.setAttribute('type', 'checkbox')
-        togSub.addEventListener('change', e => subItem.type = togSub.checked)
+        
+        
+        const togSub = document.createElement('div');       
         li.insertBefore(togSub,input)
+        togSubNote(subItem, togSub)
     })
     editBox.appendChild(addSub)
 
@@ -202,12 +206,10 @@ export default Todo.prototype.inputMode = function(a){
             li.appendChild(trashImg)
             subContainer.appendChild(li)
         
-            //toggles between note and task. Note = unchecked
-            const togSub = document.createElement('input');
-            togSub.setAttribute('type', 'checkbox')
-            if(o.type === 'task') togSub.setAttribute('checked','checked');
-            togSub.addEventListener('change', e => i.type = togSub.checked)
-            li.insertBefore(togSub,input)        
+            //toggles between note and task
+            const togSub = document.createElement('div');
+            o.type==='note'?togSubNote(i, togSub):togSubTask(i, togSub);
+            li.insertBefore(togSub,input)
         })    
     }
 
@@ -303,3 +305,27 @@ export default Todo.prototype.inputMode = function(a){
     return todo
 }
 
+//functions that are used to toggle between notes and tasks
+function togSubNote(a,b){
+    const img = new Image();
+    img.classList.add('noteImg', 'subImg');
+    img.src = note;
+    a.type = false;
+    img.addEventListener('click', e =>{
+        togSubTask(a,b)
+    })
+
+    b.replaceChildren(img)
+}
+
+function togSubTask(a,b){
+    const img = new Image();
+    img.classList.add('taskImg', 'subImg');
+    img.src = taskImg;
+    a.type = true;
+    img.addEventListener('click', e =>{
+        togSubNote(a,b)
+    })
+
+    b.replaceChildren(img)
+}

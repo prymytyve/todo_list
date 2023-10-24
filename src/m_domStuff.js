@@ -100,9 +100,9 @@ today.addEventListener('click', e =>{
     tabFunction()
 })
 
-//only diplays upcoming todos
+//only displays upcoming todos
 const upcoming = document.querySelector('.upcoming')
-upcoming.addEventListener('click', e=>{
+upcoming.addEventListener('click', e =>{
     toolbar.setAttribute('data', 'upcoming')
     toolbarText.textContent = 'Upcoming';
     tabFunction()   
