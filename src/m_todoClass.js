@@ -6,7 +6,6 @@ const todoArr = [];
 
 
 class Todo {
-    
     add = () => {todoArr.push(this)}
 
     _task = ''
@@ -16,6 +15,7 @@ class Todo {
     _completed = false
     _subList = []
     _id = 'id'+uuidv4()
+    _unDueDate = '';
 
     get task(){
         return this._task;
@@ -189,3 +189,10 @@ export {Todo, Sub, todoArr}
 //     subTodos.forEach(sub => new Sub(sub, this._subList))
 //     this.add()
 // }
+
+for(let i = 0; i < 50; i++){
+    let art = i
+    const t = new Todo(`${art}`)
+    t.task = art;
+    t.add()
+}

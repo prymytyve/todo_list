@@ -9,8 +9,10 @@ li{
 }
 
 body{
+    position: relative;
     display:grid;
     grid-template-columns: 1fr 7fr;
+ 
 }
 
 p{
@@ -42,9 +44,11 @@ nav button,
 /* nav stuff */
 nav{
     background-color: red;
-    height:100vh;
+    position: sticky;
+    top: 0%;
     display: grid;
-    grid-template-rows: 1fr 4fr;
+    grid-template-rows: 1fr 4fr;    
+    height: 100vh;
 }
 
 .mainNav,
@@ -63,16 +67,52 @@ nav{
     justify-content: space-between;
 }
 
+.mainBody{
+    height: auto;
+    overflow: auto;
+}
+
+.mainWrapper{
+    position: relative;
+}
 
 /* ///////////////////////////////////////////////////////////////// */
 /* toolbar stuff */
 
 .toolbar{
-    height: 5%;
+    top:0%;
     background-color: aquamarine;
-    display: flex;
-    justify-content: space-evenly;
+    display: grid;
+    /* justify-content: space-evenly; */
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-areas: 
+    "e1 e2 e3";
+    position:sticky;
+    height: auto;
 }
+
+.toolbar > * {
+    align-self: center;
+    justify-self: center;
+    padding: 10px;
+}
+
+.toolbarText{
+    grid-column: 2/3;
+    grid-area: e2;
+    font-size: 2rem;
+}
+
+.multiDelDiv{
+    grid-column: 3/4;
+    grid-area: e3;
+}
+
+.sortingDiv{
+    grid-column: 1/2;
+    grid-area: e1;
+}
+
 
 /* //////////////////////////////////////////////////////////////// */
 /* Todos */
@@ -325,8 +365,16 @@ nav{
 }
 
 /* /////////////////////////////// */
-.addToDo{
-    position: absolute;
+.addTodoDiv{
+    position: sticky;
+    top: 90%;
+    left:15%;
+}
+
+.addTodo{
+    border-radius: 100%;
+    height: 4rem;
+    width: 4rem; 
 }
 
 /*  */

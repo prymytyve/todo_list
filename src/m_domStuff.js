@@ -55,7 +55,7 @@ function filterTodo(theseTodos){
 }
 
 //gets current data attribute of toolbar, and applies functions that will return a filtered array of todos
-export const tabFunction = () =>{
+export const tabFunction = (a) =>{
     const data = toolbar.getAttribute('data')
     if(data === 'all'){
         const theseTodos = todoArr.filter(todo =>todo.completed === false);
@@ -175,8 +175,17 @@ export function addProjEvent(e) {
         e.preventDefault()
         addProj(input.value)
         mainBody.removeChild(div)
-        projBtn.disabled = false
-        // console.log(projArr)
+        projBtn.disabled = false        
+        const todosCreating = document.querySelectorAll('.creating')
+        console.log(todosCreating)
+        if(todosCreating.length === 0 ){
+            toolbar.setAttribute('data', input.value);
+            toolbarText.textContent = toolbar.getAttribute('data')
+            tabFunction()
+        } else if(todosCreating.length !==0){
+            switchOption(input.value);
+        }
+
         const projSel = document.querySelectorAll('.projSelect')
         projSel.forEach(i =>{
             const addProjOpt = document.querySelector('.addProjOpt')
@@ -360,8 +369,6 @@ const sortPriority = () =>{
 
 const dummyFunc = () =>{}; // does nothing
 
-
-
 const sortOptions = [
     {opt: '', func: dummyFunc },
     {opt:'Due date', func: sortDueDate}, 
@@ -378,4 +385,33 @@ sortOptions.forEach(sortOpt =>{
 sort.addEventListener('change', e=>{
     const sortObj = sortOptions.find(x => x.opt === sort.value)
     sortObj.func()
+    sort.value = sortOptions[0]
 })
+
+
+//function gives users option to stay in current tab and finish creating todo, or switch tabs and lose progress
+function switchOption(i){
+    const dialog= document.createElement('dialog')
+    dialog.classList.add('switchTabsOption')
+    dialog.textContent = 'Switching to new project will delete any todos currently being created or any changes to todos in edit mode. Do you want to switch to new project?' 
+    const data = toolbar.getAttribute('data')     
+    const yesBtn = document.createElement('button');
+    yesBtn.textContent = 'Yes';
+    yesBtn.addEventListener('click', e =>{
+        e.preventDefault();
+        toolbar.setAttribute('data', i)
+        toolbarText.textContent = i
+        tabFunction()
+        //mainBody.removeChild(dialog)
+    })
+    dialog.appendChild(yesBtn)
+    const noBtn = document.createElement('button');
+    noBtn.textContent = 'No';
+    noBtn.addEventListener('click', e =>{
+        e.preventDefault();
+        mainBody.removeChild(dialog)
+    })
+    dialog.appendChild(noBtn)      
+    mainBody.appendChild(dialog) 
+    dialog.showModal()
+}
