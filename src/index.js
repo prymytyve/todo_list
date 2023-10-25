@@ -1,4 +1,4 @@
 import './style.css';
-import {todoCreator, test} from './m_domStuff.js';
+import {initialLoad} from './m_domStuff.js';
 
-todoCreator()
+initialLoad()

@@ -107,7 +107,7 @@ export default Todo.prototype.inputMode = function(a){
         const toolbar = document.querySelector('.toolbar')
         const data = toolbar.getAttribute('data')
         let data2;
-        data==='all'||data==='today'||data==='completed'||data==='pastDue'?data2='Default':data2=data;
+        data==='all'||data==='today'||data==='completed'||data==='pastDue'||data==='upcoming'?data2='Default':data2=data;
         let selected;
         a!=null?selected=data2:selected=this.project;
         if (projArr[i].projectName === selected) projOption.setAttribute('selected', 'selected');             

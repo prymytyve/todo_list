@@ -12,7 +12,16 @@ const addTodoDiv = document.querySelector('.addTodoDiv')
 const toolbar = document.querySelector('.toolbar')
 const toolbarText = document.querySelector('.toolbarText')
 
-export function todoCreator(){    
+
+export function initialLoad(){
+    resetPage()    
+    for(let i =0; i<50; i++){
+        const o = 'proj'+i;
+        addProj(o)
+    }
+}
+
+(function todoCreator(){    
     //creates 
     addTodo.addEventListener('click', () =>{
         const todosInInputMode = document.querySelectorAll('.inputMode')
@@ -23,6 +32,8 @@ export function todoCreator(){
         todoDiv.setAttribute('data', `${todo.id}`)
         todoDiv.appendChild(todo.inputMode('generate'))
         mainBody.appendChild(todoDiv)
+        const thisProjSel = document.querySelector(`[data='${todo.id}'] .projSelect`)
+        thisProjSel.focus()
     })
     
     // testing 
@@ -30,9 +41,10 @@ export function todoCreator(){
     b.textContent = 'check'
     b.addEventListener('click', () => {
         console.log(todoArr)
+        console.log(projArr)
     })
     mainWrapper.append(b)
-}
+})();
 
 //function below gets current date
 function todaysDate(){
@@ -142,7 +154,7 @@ function addProj(a){
     const project = new Project(a)
     const projDiv = document.createElement('div')
     projDiv.classList.add('project')
-    const proj = document.createElement('p')
+    const proj = document.createElement('button')
     proj.textContent = project.projectName
     proj.addEventListener('click', e =>{
         e.preventDefault()
