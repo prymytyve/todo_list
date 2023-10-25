@@ -190,9 +190,9 @@ export {Todo, Sub, todoArr}
 //     this.add()
 // }
 
-for(let i = 0; i < 50; i++){
-    let art = i
-    const t = new Todo(`${art}`)
-    t.task = art;
-    t.add()
-}
+// for(let i = 0; i < 50; i++){
+//     let art = i
+//     const t = new Todo(`${art}`)
+//     t.task = art;
+//     t.add()
+// }

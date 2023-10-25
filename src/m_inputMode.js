@@ -32,6 +32,7 @@ export default Todo.prototype.inputMode = function(a){
     const task = document.createElement('input');
     task.classList.add('task');
     task.setAttribute('value', this.task)
+    task.setAttribute('maxlength', 20)
     task.addEventListener('keyup', () => {
         task.value.length === 0? finBtn.disabled = true: finBtn.disabled = false; 
         task.value.length === 0?submitBtn.disabled = true: submitBtn.disabled = false;
@@ -126,13 +127,13 @@ export default Todo.prototype.inputMode = function(a){
         addSub.disabled = true;
         finBtn.disabled = true;
         submitBtn.disabled = true;
-        e.preventDefault()
-        if(a==null)console.log(tempArr2)        
+        e.preventDefault()    
         
         //creates subItems dom elements
         const li = document.createElement('li');
         li.classList.add('subTask')
         const input = document.createElement('input');
+        input.setAttribute('maxlength', 45)
         let currentArray;
         a!=null? currentArray=tempArr: currentArray=tempArr2;
         const subItem = new Sub(input.value,currentArray)
@@ -179,6 +180,7 @@ export default Todo.prototype.inputMode = function(a){
             const li = document.createElement('li');
             li.classList.add('subTask')
             const input = document.createElement('input');
+            input.setAttribute('maxlength', 35)
             input.setAttribute('value', i.subTask)
             i.type = o.type;
             if (o.completed === true){ 

@@ -55,6 +55,7 @@ nav{
 .mainNav,
 .projects{
     display:grid;
+    align-self: center;
     justify-items: center;
 }
 
@@ -87,6 +88,21 @@ nav{
     font-size: 1rem;
 }
 
+.project > .proj{
+    width: 125px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    font-size: 0.8rem;
+}
+
+
+.project .subTrash{
+  height: 1rem;
+  width: 1rem;  
+}
+
 .projBtnDiv{
     margin-top: 2px;
     margin-bottom: 5px;
@@ -97,9 +113,11 @@ nav{
 
 
 /*main body stuff*/
-.mainBody{
+#mainBody{
     height: auto;
     overflow: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px,1fr))
 }
 
 .mainWrapper{
@@ -202,6 +220,21 @@ nav{
     font-size: 0.7rem;
 }
 
+.projSelect{
+    width: 100px;    
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.projText{
+    width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: bottom;
+}
+
 .inputMode select,
 .inputMode input[type='datetime-local']{  
     font-size: 0.75rem;
@@ -233,6 +266,13 @@ nav{
 .task{
     grid-area: a2;
     width: 320px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.printMode > .task{
+    font-size: 1.3rem;
 }
 
 .main{
@@ -297,6 +337,13 @@ nav{
     list-style-type: none;
 }
 
+.subItem > p{
+    width: 280px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 
 .noteSection li:not(:first-child) ::before{
    content: '';
@@ -340,6 +387,7 @@ nav{
     font-size: 0.7rem; 
 }
 
+
 .subTask > .delBtn{
     height: 1rem;
     width: 1rem;
@@ -360,10 +408,6 @@ nav{
     width:70px;
     height: 20px;
     font-size: 0.6rem
-}
-
-.printMode > .task{
-    font-size: 2rem;
 }
 
 .completedSub{
@@ -406,12 +450,16 @@ nav{
     border-radius: 100%;
     height: 4rem;
     width: 4rem; 
+    font-size: 2rem;
 }
 
 /*  */
-/* dialog{
-    margin: 0px;
+dialog{
+    margin-top: 0px;
     top:20%;
+}
 
-} */
+dialog button{
+    margin-left:5px;
+}
 

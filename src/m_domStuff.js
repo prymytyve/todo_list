@@ -15,10 +15,12 @@ const toolbarText = document.querySelector('.toolbarText')
 
 export function initialLoad(){
     resetPage()    
-    for(let i =0; i<50; i++){
-        const o = 'proj'+i;
-        addProj(o)
-    }
+    
+    //testing 
+    // for(let i =0; i<50; i++){
+    //     const o = 'proj'+i;
+    //     addProj(o)
+    // }
 }
 
 (function todoCreator(){    
@@ -36,14 +38,14 @@ export function initialLoad(){
         thisProjSel.focus()
     })
     
-    // testing 
-    const b = document.createElement('button');
-    b.textContent = 'check'
-    b.addEventListener('click', () => {
-        console.log(todoArr)
-        console.log(projArr)
-    })
-    mainWrapper.append(b)
+    // // testing 
+    // const b = document.createElement('button');
+    // b.textContent = 'check'
+    // b.addEventListener('click', () => {
+    //     console.log(todoArr)
+    //     console.log(projArr)
+    // })
+    // mainWrapper.append(b)
 })();
 
 //function below gets current date
@@ -155,6 +157,7 @@ function addProj(a){
     const projDiv = document.createElement('div')
     projDiv.classList.add('project')
     const proj = document.createElement('button')
+    proj.classList.add('proj')
     proj.textContent = project.projectName
     proj.addEventListener('click', e =>{
         e.preventDefault()
@@ -162,14 +165,19 @@ function addProj(a){
         toolbarText.textContent = toolbar.getAttribute('data')
         tabFunction()
     })
+    
+
     const trashImg = new Image();
-    trashImg.classList.add('delBtn')
+    trashImg.classList.add('subTrash')
     trashImg.src = trash;
-    trashImg.addEventListener('click', e =>{
+    const tButton = document.createElement('button')
+    tButton.classList.add('subTrashbtn')
+    tButton.appendChild(trashImg)
+    tButton.addEventListener('click', e =>{
         projDelForm(project, projDiv)
     })
     projDiv.appendChild(proj)
-    projDiv.appendChild(trashImg)
+    projDiv.appendChild(tButton)
     projectsDiv.insertBefore(projDiv, projBtnDiv)
 }
 
@@ -180,7 +188,7 @@ export function addProjEvent(e) {
     const div= document.createElement('dialog')
     div.classList.add('projWin')
     const input = document.createElement('input')
-  
+    input.setAttribute('maxlength', 20)
     const submit = document.createElement('button')
     submit.textContent = 'submit';
     submit.addEventListener('click', (e) =>{
@@ -189,12 +197,12 @@ export function addProjEvent(e) {
         mainBody.removeChild(div)
         projBtn.disabled = false        
         const todosCreating = document.querySelectorAll('.creating')
-        console.log(todosCreating)
-        if(todosCreating.length === 0 ){
+        const todosBeingEdited = document.querySelectorAll('.inputMode')
+        if(todosCreating.length === 0 &&  todosBeingEdited.length ===0){
             toolbar.setAttribute('data', input.value);
             toolbarText.textContent = toolbar.getAttribute('data')
             tabFunction()
-        } else if(todosCreating.length !==0){
+        } else if(todosCreating.length !==0 || todosBeingEdited.length!==0 ){
             switchOption(input.value);
         }
 
@@ -355,10 +363,16 @@ multiDel.addEventListener('click', e=>{
 function inputState(a){ //used to enable/disable inputs on page
     const navOptions = document.querySelectorAll('.navOptions')
     navOptions.forEach(nav => nav.disabled = a)
+    const proj= document.querySelectorAll('.proj') 
+    proj.forEach(btn => btn.disabled = a) 
     projBtn.disabled = a;    
     addTodo.disabled = a;
     const editBtns = document.querySelectorAll('.editBtn');
     editBtns.forEach(e => e.disabled = a)
+    const subTrashbtn = document.querySelectorAll('.subTrashbtn');
+    subTrashbtn.forEach(btn => btn.disabled=a)
+
+
 }
 
 function resetStuff(){ //used to reset most content on page
@@ -379,12 +393,18 @@ const sortPriority = () =>{
     tabFunction()         
 }
 
+const sortName = () =>{
+    const sorted = todoArr.sort((a,b) => a.task < b.task? -1 : 1);
+    tabFunction()             
+}
+
 const dummyFunc = () =>{}; // does nothing
 
 const sortOptions = [
     {opt: '', func: dummyFunc },
     {opt:'Due date', func: sortDueDate}, 
-    {opt:'Priority', func: sortPriority}
+    {opt:'Priority', func: sortPriority},
+    {opt:'Task name', func: sortName}
 ]
 
 
@@ -405,7 +425,7 @@ sort.addEventListener('change', e=>{
 function switchOption(i){
     const dialog= document.createElement('dialog')
     dialog.classList.add('switchTabsOption')
-    dialog.textContent = 'Switching to new project will delete any todos currently being created or any changes to todos in edit mode. Do you want to switch to new project?' 
+    dialog.textContent = 'Switching to the new project will delete all unsaved todos and todo changes. Do you want to switch?' 
     const data = toolbar.getAttribute('data')     
     const yesBtn = document.createElement('button');
     yesBtn.textContent = 'Yes';
