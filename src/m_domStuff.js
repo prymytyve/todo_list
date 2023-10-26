@@ -15,12 +15,6 @@ const toolbarText = document.querySelector('.toolbarText')
 
 export function initialLoad(){
     resetPage()    
-    
-    //testing 
-    // for(let i =0; i<50; i++){
-    //     const o = 'proj'+i;
-    //     addProj(o)
-    // }
 }
 
 (function todoCreator(){    
@@ -38,7 +32,7 @@ export function initialLoad(){
         thisProjSel.focus()
     })
     
-    // // testing 
+    // testing 
     // const b = document.createElement('button');
     // b.textContent = 'check'
     // b.addEventListener('click', () => {
@@ -90,6 +84,7 @@ export const tabFunction = (a) =>{
         const theseTodos = todoArr.filter(todo => todo.project === data);
         filterTodo(theseTodos);
     }  
+    localStorage.setItem('savedTodos', JSON.stringify(todoArr))
 }
 
 //displays all active todos
@@ -152,7 +147,7 @@ projBtn.addEventListener('click', e =>{
 
 
 //appends projects to nav bar
-function addProj(a){
+export function addProj(a){
     const project = new Project(a)
     const projDiv = document.createElement('div')
     projDiv.classList.add('project')
@@ -194,6 +189,7 @@ export function addProjEvent(e) {
     submit.addEventListener('click', (e) =>{
         e.preventDefault()
         addProj(input.value)
+        localStorage.setItem('savedProjs', JSON.stringify(projArr))
         mainBody.removeChild(div)
         projBtn.disabled = false        
         const todosCreating = document.querySelectorAll('.creating')
@@ -251,7 +247,8 @@ function projDelForm(a, projDiv){
     yesBtn.textContent = 'Yes';
     yesBtn.addEventListener('click', e =>{
         e.preventDefault();
-        a.delete()
+        a.delete();
+        localStorage.setItem('savedProjs', JSON.stringify(projArr))
         projectsDiv.removeChild(projDiv)
         projSel.forEach(p => {
             p.value='Default'
@@ -269,6 +266,7 @@ function projDelForm(a, projDiv){
     noBtn.addEventListener('click', e =>{
         e.preventDefault();
         a.delete()
+        localStorage.setItem('savedProjs', JSON.stringify(projArr))
         projectsDiv.removeChild(projDiv)
         projSel.forEach(p => {
             p.value='Default'

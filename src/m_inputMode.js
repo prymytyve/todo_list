@@ -235,7 +235,7 @@ export default Todo.prototype.inputMode = function(a){
             thisTodoDiv.replaceChildren(this.printMode())
             const toolbar = document.querySelector('.toolbar')
             const data = toolbar.getAttribute('data')
-            // tabFunction()
+            tabFunction()
         })
         editBox.appendChild(submitBtn);
 
@@ -265,7 +265,7 @@ export default Todo.prototype.inputMode = function(a){
             this.subList = filteredSubList;
             const thisTodoDiv = document.querySelector(`[data=${this.id}]`)
             thisTodoDiv.replaceChildren(this.printMode())
-            // tabFunction()
+            tabFunction()
         })
         editBox.appendChild(finBtn)
 
@@ -290,6 +290,7 @@ export default Todo.prototype.inputMode = function(a){
             this.delete()
             const thisTodoDiv = document.querySelector(`[data=${this.id}]`)
             mainBody.removeChild(thisTodoDiv)
+            localStorage.setItem('savedTodos', JSON.stringify(todoArr));
         })
         completeDiv.appendChild(trashImg)
     }

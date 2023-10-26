@@ -19,7 +19,10 @@ export default Todo.prototype.printMode = function(){
         const editBtn = document.querySelector(`[data=${e}] .editBtn`)
         editBtn.disabled = val;
         const checkBoxes = document.querySelectorAll(`[data=${e}] .subTask input[type="checkbox"`);
-        checkBoxes.forEach(checkBox => checkBox.disabled = val);
+        checkBoxes.forEach(checkBox => {
+            checkBox.disabled = val;
+            localStorage.setItem('savedTodos', JSON.stringify(todoArr));
+        });
     }
 
     function pastDueToComp(){
@@ -167,6 +170,7 @@ export default Todo.prototype.printMode = function(){
                 togComplete.addEventListener('change', e =>{ 
                     item.completed = togComplete.checked
                     togComplete.checked === true?li.classList.add('completedSub'):li.classList.remove('completedSub') 
+                    localStorage.setItem('savedTodos', JSON.stringify(todoArr));
                 })
                 li.appendChild(p)
                 li.insertBefore(togComplete, p)                              
