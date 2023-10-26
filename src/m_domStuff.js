@@ -95,7 +95,7 @@ export const tabFunction = (a) =>{
 //displays all active todos
 function resetPage(){
     toolbar.setAttribute('data', 'all')
-    toolbarText.textContent = 'All';
+    toolbarText.textContent = 'All active todos';
     tabFunction()
 }
 

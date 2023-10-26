@@ -189,10 +189,3 @@ export {Todo, Sub, todoArr}
 //     subTodos.forEach(sub => new Sub(sub, this._subList))
 //     this.add()
 // }
-
-// for(let i = 0; i < 50; i++){
-//     let art = i
-//     const t = new Todo(`${art}`)
-//     t.task = art;
-//     t.add()
-// }
