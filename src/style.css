@@ -90,6 +90,10 @@ nav{
     font-size: 1rem;
 }
 
+.projBtn{
+    letter-spacing: 2px;
+}
+
 .project > .proj{
     width: 125px;
     white-space: nowrap;
